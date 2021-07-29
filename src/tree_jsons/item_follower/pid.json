@@ -1,0 +1,26 @@
+{
+    "name":"pid",
+    "type":"Multitasker",
+    "children":[
+        {
+            "name":"Calculate angular velocity necessary to be parallel to the wall",
+            "type":"AngularPID",
+            "pid_err_var_name":"angular_pid",
+            "nearest_dist_var_name":"nearest_dist",
+            "nearest_angle_var_name":"nearest_wall_angle",
+            "kp":0.7,
+            "kd":0.7,
+            "kp2":0.8,
+            "dwall":0.09,
+            "offset":1.57079
+          },
+          {
+            "name":"Calculate linear velocity necessary to avoid collision",
+            "type":"LinearPID",
+            "linear_pid_var_name":"linear_pid",
+            "diff_var_name":"avg_front_dist",
+            "max_vel":0.1,
+            "offset":0.05
+          }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "name":"reached_goal",
+    "type":"Sequencer",
+    "children":[
+        {
+            "name":"reached_position",
+            "type":"ReachedPosition",
+            "odom_var_name":"/odom",
+            "goal_pos_var_name":"goal_pos",
+            "error":0.01
+        },
+        {
+            "name":"stop",
+            "type":"Stop"
+        }
+    ]
+}

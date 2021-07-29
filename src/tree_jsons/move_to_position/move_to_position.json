@@ -1,0 +1,16 @@
+{
+    "name":"move_to_position",
+    "type":"Selector",
+    "children":[
+        {
+            "ref":"tree_jsons/move_to_position/reached_goal.json"
+        },
+        {
+            "ref":"tree_jsons/move_to_position/move.json"
+        }
+    ],
+    "blackboard":{
+        "goal_pos":[0,0],
+        "/odom":"Odometry"
+    }
+}

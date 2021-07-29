@@ -1,0 +1,59 @@
+// Behavior Tree
+digraph {
+	move_to_position [label="move_to_position
+type: Selector" shape=box]
+	reached_goal [label="reached_goal
+type: Sequencer" shape=cds]
+	reached_position [label="reached_position
+type: ReachedPosition" shape=oval]
+	reached_goal -> reached_position
+	stop [label="stop
+type: Stop" shape=oval]
+	reached_goal -> stop
+	move_to_position -> reached_goal
+	move [label="move
+type: Sequencer" shape=cds]
+	preprocess_odom [label="preprocess_odom
+type: Multitasker" shape=oval]
+	print_pos [label="print_pos
+type: GetPosition" shape=oval]
+	preprocess_odom -> print_pos
+	get_rot [label="get_rot
+type: GetRotation" shape=oval]
+	preprocess_odom -> get_rot
+	move -> preprocess_odom
+	dist_ang_to_pos [label="dist_ang_to_pos
+type: Multitasker" shape=oval]
+	angle_to_pos [label="angle_to_pos
+type: AngleToPosition" shape=oval]
+	dist_ang_to_pos -> angle_to_pos
+	dist_to_position [label="dist_to_position
+type: DistToPosition" shape=oval]
+	dist_ang_to_pos -> dist_to_position
+	move -> dist_ang_to_pos
+	pid [label="pid
+type: Multitasker" shape=oval]
+	"Calculate angular velocity necessary to be parallel to the wall" [label="Calculate angular velocity necessary to be parallel to the wall
+type: AngularPID" shape=oval]
+	pid -> "Calculate angular velocity necessary to be parallel to the wall"
+	"Calculate linear velocity necessary to avoid collision" [label="Calculate linear velocity necessary to avoid collision
+type: LinearPID" shape=oval]
+	pid -> "Calculate linear velocity necessary to avoid collision"
+	move -> pid
+	move_with_pid [label="move_with_pid
+type: LinearAngularDynamic" shape=oval]
+	move -> move_with_pid
+	move_to_position -> move
+	Blackboard [label="BLACKBOARD
+
+goal_pos  :  [0, 0]
+/odom  :  Odometry
+position  :  None
+rotation  :  None
+goal_rotation  :  None
+dist  :  None
+angular_pid  :  None
+linear_pid  :  None
+" shape=rectangle]
+	Blackboard -> move_to_position
+}
