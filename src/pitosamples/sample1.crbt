@@ -1,0 +1,116 @@
+variables {
+
+}
+
+sensors {
+    lidar pub: "/scan",  model: "ydlidar
+    filter type: "remove_noise", from: "/scan", to: "/scan_filtered"
+    detector type: "target", bearing: "
+    detector "collision", from: "/scan_filtered", to: ":distance_to_obstacle"
+    camera pub: "/camera/image_raw", model: "picamera"
+}
+
+Actuators::
+    movement speed: ":meter_per_sec", turn: ":rad_per_sec"
+	movement(“m_per_s”, “rad_per_sec”)
+	arm(“elbow_angle”, “claw_open
+	horn(“time”, “frequency”)
+	speaker(“sentence”)
+}
+
+behaviors {
+
+}
+s
+sequence main  {
+	scan_preprocess()
+	angular_pid = calc_pid(nearest_dist, nearest_wall_angle)
+	move(near_angle, near_dist, avg_front)
+}
+
+parallel scan_preprocess()  {
+	near_angle = nearest_wall_angle()
+ 	near_dist = nearest_distance()
+	avg_front = calc_avg_front_dist()
+}
+
+sequence move  {
+	preprocess_odom()
+	move_to_position()
+	pid()
+}
+
+# full item follower
+
+
+# question: can’t the Odom message be automatically destructured into
+# BB variables position and rotation?
+
+parallel preprocess_odom {
+	position = getPosition(“/odom”)
+	rotation = getRotation(“/odom”)
+}
+
+# Or do we declare some behavior wide settings:
+
+behavior(“follow_wall”) {
+	Use_degrees
+}
+
+
+
+
+
+Blackboard:
+
+## default_move_bearing_liinear_vel = 0.2
+
+Services:
+	….
+
+
+Behaviors:
+
+Sequence main {
+	follow_and_avoid()
+	follow_wall()
+}
+
+Sequence follow_and_avoid {
+	clearAhead()
+	detection = BoxDetector(“/camera_node”, 
+	follow_item_stop_stopper()
+}
+
+Sequence follow_wall {
+	scan_preprocess()
+	pid()
+	move_accordning_to_pid()
+}
+
+Selector follow_item_stop_stopper {
+	sequence stop_item {
+		bearing_topper = item_bearing_error(detection, “Bottle”)
+		stop()
+	}
+	Sequence follow_item {
+		Bearing_target = item_bearing_error(detection, “face”)
+		move_beaing(bearing_target)
+
+
+
+If wall_ahead(0.4):
+	follow_wall()
+Else:
+	Detection = run_box_detector()
+	If is_item_visible(detection, “bottle”):
+		stop()
+	Else if is_item_visible(detection, “person”):
+		Bearing_target = item_bearing_error(detection, “person”)
+		move(bearing_target)
+
+
+
+
+
+
