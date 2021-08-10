@@ -1,3 +1,11 @@
+Concept:can 
+
+- There are 4 top-level "sections" - variables, sensors, actuators, and behaviors
+- Parameters are quoted strings
+- They are either "/xxx" for a topic or ":yyy" for a blackboard variable
+- Most of the parameters have good defaults so that they often can just be left out
+-
+
 variables {
 
 }
@@ -5,34 +13,62 @@ variables {
 sensors {
     lidar pub: "/scan",  model: "ydlidar
     filter type: "remove_noise", from: "/scan", to: "/scan_filtered"
-    detector type: "target", bearing: "
+    detector type: "target", from: "/scan_filtered", bearing: ":target_bearing", ":target_distance"
+	detector type: "cv", target: "bottle", image: "/camera/image_filtered"
     detector "collision", from: "/scan_filtered", to: ":distance_to_obstacle"
     camera pub: "/camera/image_raw", model: "picamera"
 }
 
-Actuators::
-    movement speed: ":meter_per_sec", turn: ":rad_per_sec"
-	movement(“m_per_s”, “rad_per_sec”)
-	arm(“elbow_angle”, “claw_open
-	horn(“time”, “frequency”)
-	speaker(“sentence”)
+The parent nodes can take in parameters detailing the sensors and filters that will 
+be passed down to all child nodes. You do not have to specify redundant sensors/filters
+in child nodes whose parents already have the sensors/filters specified.
+Sequencer {
+	sensors: "lidar"
+	filters: "fov":45, "range":0.5, "angle":0
+	children:[
+		Sequencer {
+			children:[
+
+			]
+		}
+	]
 }
 
+behavior {
+	sensors: [ lidar: { pub: "/scan_front" },
+				camera: "enabled"
+	]
+	filters: [
+		lidar: { "fov":45, "range":0.5, "angle":0, sub: "/scan_front", pub: "/scan_filtered" },
+		camera: { "downsample: "25%", greyscale: "true" }
+		obstacle_detect { "sub": "/scan_filtered","distance": ":distance_to_obstacle" , "bearing: ":target_bearing", "detected": ":detected" }
+	]
+	selector:[
+		sequencer:[
+			conditional:"close to obstacle"{sub:":detected"}
+			action:"stop all movement"
+		],
+		action:"move towards bearing" {sub:":target_bearing"}
+		
+		# am I close to an obstacle?, if so stop?
+		# otherwise: drive towards obstacle
+
+		}
+	]
+}
+
+
+actuators {
+    movement speed: ":meter_per_sec", turn: ":rad_per_sec"
+	horn seconds: ":horn_sec“
+	speech text: ":sentence"
+}
 behaviors {
 
-}
-s
-sequence main  {
-	scan_preprocess()
-	angular_pid = calc_pid(nearest_dist, nearest_wall_angle)
-	move(near_angle, near_dist, avg_front)
-}
 
-parallel scan_preprocess()  {
-	near_angle = nearest_wall_angle()
- 	near_dist = nearest_distance()
-	avg_front = calc_avg_front_dist()
-}
+    sequence main  {
+        move(:target_bearing, :target_distance, :avg_front)
+    }
 
 sequence move  {
 	preprocess_odom()
