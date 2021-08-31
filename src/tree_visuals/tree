@@ -1,0 +1,78 @@
+// Behavior Tree
+digraph {
+	item_follower [label="item_follower
+type: Selector" shape=box]
+	follow_and_avoid [label="follow_and_avoid
+type: Sequencer" shape=cds]
+	"Is there an obstacle ahead?" [label="Is there an obstacle ahead?
+type: ClearAhead" shape=oval]
+	follow_and_avoid -> "Is there an obstacle ahead?"
+	"Run box detector model" [label="Run box detector model
+type: FastDetector" shape=oval]
+	follow_and_avoid -> "Run box detector model"
+	follow_item_stop_stopper [label="follow_item_stop_stopper
+type: Selector" shape=box]
+	stop_item [label="stop_item
+type: Sequencer" shape=cds]
+	"Is stopper visible?" [label="Is stopper visible?
+type: ItemBearingErr" shape=oval]
+	stop_item -> "Is stopper visible?"
+	"Stop!" [label="Stop!
+type: Stop" shape=oval]
+	stop_item -> "Stop!"
+	follow_item_stop_stopper -> stop_item
+	follow_item [label="follow_item
+type: Sequencer" shape=cds]
+	"Calculate bearing to item" [label="Calculate bearing to item
+type: ItemBearingErr" shape=oval]
+	follow_item -> "Calculate bearing to item"
+	"Move forward in direction of bearing" [label="Move forward in direction of bearing
+type: LinearAngularDynamic" shape=oval]
+	follow_item -> "Move forward in direction of bearing"
+	follow_item_stop_stopper -> follow_item
+	follow_and_avoid -> follow_item_stop_stopper
+	item_follower -> follow_and_avoid
+	follow_wall [label="follow_wall
+type: Sequencer" shape=cds]
+	scan_preprocessing [label="scan_preprocessing
+type: Multitasker" shape=oval]
+	"Calculate the angle to the nearest wall" [label="Calculate the angle to the nearest wall
+type: CalcNearestWallAngle" shape=oval]
+	scan_preprocessing -> "Calculate the angle to the nearest wall"
+	"Calculate the nearest distance" [label="Calculate the nearest distance
+type: CalcNearestDist" shape=oval]
+	scan_preprocessing -> "Calculate the nearest distance"
+	"Calculate the average distance in front" [label="Calculate the average distance in front
+type: CalcAvgFrontDist" shape=oval]
+	scan_preprocessing -> "Calculate the average distance in front"
+	follow_wall -> scan_preprocessing
+	pid [label="pid
+type: Multitasker" shape=oval]
+	"Calculate angular velocity necessary to be parallel to the wall" [label="Calculate angular velocity necessary to be parallel to the wall
+type: AngularPID" shape=oval]
+	pid -> "Calculate angular velocity necessary to be parallel to the wall"
+	"Calculate linear velocity necessary to avoid collision" [label="Calculate linear velocity necessary to avoid collision
+type: LinearPID" shape=oval]
+	pid -> "Calculate linear velocity necessary to avoid collision"
+	follow_wall -> pid
+	"Move according to PID calculations" [label="Move according to PID calculations
+type: LinearAngularDynamic" shape=oval]
+	follow_wall -> "Move according to PID calculations"
+	item_follower -> follow_wall
+	Blackboard [label="BLACKBOARD
+
+detector_label_dict  :  None
+/raspicam_node/image/compressed  :  CompressedImage
+detection  :  None
+_  :  None
+item_err  :  None
+static_lin  :  0.1
+linear_pid  :  None
+angular_pid  :  None
+/scan  :  LaserScan
+avg_front_dist  :  None
+nearest_dist  :  None
+nearest_wall_angle  :  None
+" shape=rectangle]
+	Blackboard -> item_follower
+}

@@ -1,0 +1,26 @@
+{
+    "name":"or",
+    "type":"Or",
+    "children":[
+        {
+            "name":"cond1",
+            "type":"BoolVar",
+            "var_name":"bool1"
+        },
+        {
+            "name":"cond2",
+            "type":"BoolVar",
+            "var_name":"bool2"
+        },
+        {
+            "name":"cond3",
+            "type":"BoolVar",
+            "var_name":"bool3"
+        },
+        {
+            "name":"cond4",
+            "type":"BoolVar",
+            "var_name":"bool4"
+        }
+    ]
+}

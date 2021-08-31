@@ -1,0 +1,15 @@
+{
+    "name":"avoid_wall",
+    "type":"Sequencer",
+    "children":[
+        {
+            "name":"wall_ahead",
+            "type":"WallAhead",
+            "dist":0.07,
+            "fov":30
+        },
+        {
+            "ref":"tree_jsons/item_follower/follow_wall.json"
+        }
+    ]
+}

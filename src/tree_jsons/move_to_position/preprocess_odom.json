@@ -3,7 +3,7 @@
     "type":"Multitasker",
     "children":[
         {
-            "name":"print_pos",
+            "name":"get_pos",
             "type":"GetPosition",
             "odom_var_name":"/odom",
             "position_var_name":"position"

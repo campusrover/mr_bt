@@ -14,8 +14,8 @@
         {
             "name":"move_with_pid",
             "type":"LinearAngularDynamic",
-            "linear":"linear_pid",
-            "angular":"angular_pid"
+            "linear":"linear_goal_pid",
+            "angular":"angular_goal_pid"
         }
     ]
 }

@@ -7,7 +7,7 @@
             "type":"ReachedPosition",
             "odom_var_name":"/odom",
             "goal_pos_var_name":"goal_pos",
-            "error":0.01
+            "error":0.05
         },
         {
             "name":"stop",

@@ -1,0 +1,20 @@
+{
+    "name":"xor",
+    "type":"Xor",
+    "children":[
+        {
+            "name":"cond1",
+            "type":"BoolVar",
+            "var_name":"bool1"
+        },
+        {
+            "name":"cond2",
+            "type":"BoolVar",
+            "var_name":"bool2"
+        }
+    ],
+    "blackboard":{
+        "bool1":false,
+        "bool2":true
+    }
+}
