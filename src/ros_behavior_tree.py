@@ -29,35 +29,33 @@ class ROSBehaviorTree:
             ]
 
     '''
-    def __init__(self, root, blackboard, print_vars=[]):
+    def __init__(self, root, blackboard, rate = 0.034, print_vars=[]):
+
+        self.rate = rate
 
         self.print_vars = print_vars
         
         self.curr_tick = 1
+
+        self.last_tick_time = rospy.get_time()
 
         self.root = root
 
         self.blackboard = blackboard
 
         subscribers = []
-        self.topic_vars = []
 
         for var in blackboard:
 
+            # Creates a new subscriber for each topic specified in the blackboard
             if var[0] == "/":
 
-                subscribers.append(message_filters.Subscriber(var, blackboard[var]))
-                self.topic_vars.append(var)
+                subscribers.append(rospy.Subscriber(var, blackboard[var], self.cb, var))
 
-        self.ts = message_filters.ApproximateTimeSynchronizer(subscribers, 10, 0.1, allow_headerless=True)
-
-        self.ts.registerCallback(self.cb)
+                self.blackboard[var] = None
 
 
-    def cb(self, *args):
-
-        for i, arg in enumerate(args):
-            self.blackboard[self.topic_vars[i]] = arg
+    def tick_root(self):
 
         status = self.root.tick(self.blackboard)
 
@@ -66,4 +64,19 @@ class ROSBehaviorTree:
             print(var + ": " + str(self.blackboard[var]))
 
         self.curr_tick += 1
+
+
+    def cb(self, msg, var):
+
+        self.blackboard[var] = msg
+
+        now = rospy.get_time()
+
+        # Ticks the root periodically to preserve the tick rate.
+        if (now - self.last_tick_time) >= self.rate:
+
+            self.tick_root()
+
+            self.last_tick_time = now
+        
     

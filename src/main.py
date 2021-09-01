@@ -15,8 +15,8 @@ if __name__ == '__main__':
         tb = TreeBuilder('tree_jsons/item_follower/item_follower.json')
         # root, blackboard = tb.build_tree()
         tb.draw_tree()
-        # root.tick(blackboard)
-        # print(name + ": " + str(root.tick(blackboard)))
+        # # root.tick(blackboard)
+        # # print(name + ": " + str(root.tick(blackboard)))
 
     # tree = ROSBehaviorTree(node, blackboard, print_vars=["goal_pos","linear_pid","angular_pid", "avg_front_dist", "nearest_dist", "nearest_wall_angle", "position", "rotation", "goal_rotation", "dist"])
     # rospy.spin()

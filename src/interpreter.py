@@ -74,7 +74,6 @@ import sys
 from geometry_msgs.msg import Twist, Pose
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import LaserScan, CompressedImage
-from sensor_msgs.msg import CompressedImage
 
 from nodes.nodes import *
 
