@@ -43,37 +43,43 @@ class ROSBehaviorTree:
 
         self.blackboard = blackboard
 
+        self.topics_received = {}
+
         subscribers = []
 
         for var in blackboard:
 
             # Creates a new subscriber for each topic specified in the blackboard
             if var[0] == "/":
-
+                self.topics_received[var] = False
                 subscribers.append(rospy.Subscriber(var, blackboard[var], self.cb, var))
 
-                self.blackboard[var] = None
+                # self.blackboard[var] = None
 
 
     def tick_root(self):
 
         status = self.root.tick(self.blackboard)
 
-        print("\n\nTick {}: {}\n".format(self.curr_tick, status))
-        for var in self.print_vars:
-            print(var + ": " + str(self.blackboard[var]))
+        # print("\n\nTick {}: {}\n".format(self.curr_tick, status))
+        # for var in self.print_vars:
+        #     print(var + ": " + str(self.blackboard[var]))
 
-        self.curr_tick += 1
+        # self.curr_tick += 1
 
 
     def cb(self, msg, var):
 
         self.blackboard[var] = msg
 
+        self.topics_received[var] = True
+
         now = rospy.get_time()
 
+        self.tick_root()
+
         # Ticks the root periodically to preserve the tick rate.
-        if (now - self.last_tick_time) >= self.rate:
+        if ((now - self.last_tick_time) >= self.rate) and (False not in self.topics_received.values()):
 
             self.tick_root()
 

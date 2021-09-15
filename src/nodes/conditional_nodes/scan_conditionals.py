@@ -88,7 +88,7 @@ class ClearAhead(Conditional):
 
         self.dist = dist
 
-        self.view_frac = fov/720
+        self.view_frac = fov/360
 
 
     def condition(self, blackboard):
