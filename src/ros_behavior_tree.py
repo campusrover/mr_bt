@@ -3,6 +3,8 @@
 import rospy
 import message_filters
 
+from std_msgs.msg import Byte
+
 
 
 
@@ -29,21 +31,15 @@ class ROSBehaviorTree:
             ]
 
     '''
-    def __init__(self, root, blackboard, rate = 0.034, print_vars=[]):
+    def __init__(self, root, blackboard, print_vars=[]):
 
-        self.rate = rate
-
-        self.print_vars = print_vars
-        
         self.curr_tick = 1
 
-        self.last_tick_time = rospy.get_time()
+        self.print_vars = print_vars
 
         self.root = root
 
         self.blackboard = blackboard
-
-        self.topics_received = {}
 
         subscribers = []
 
@@ -51,38 +47,27 @@ class ROSBehaviorTree:
 
             # Creates a new subscriber for each topic specified in the blackboard
             if var[0] == "/":
-                self.topics_received[var] = False
+                
                 subscribers.append(rospy.Subscriber(var, blackboard[var], self.cb, var))
 
-                # self.blackboard[var] = None
+                self.blackboard[var] = None
+
+        self.tick_sub = rospy.Subscriber('/tick', Byte, self.tick_root)
 
 
-    def tick_root(self):
+    def tick_root(self, msg):
 
         status = self.root.tick(self.blackboard)
 
-        # print("\n\nTick {}: {}\n".format(self.curr_tick, status))
-        # for var in self.print_vars:
-        #     print(var + ": " + str(self.blackboard[var]))
+        print("\n\nTick {}: {}\n".format(self.curr_tick, status))
+        for var in self.print_vars:
+            print(var + ": " + str(self.blackboard[var]))
 
-        # self.curr_tick += 1
+        self.curr_tick += 1
 
 
     def cb(self, msg, var):
 
         self.blackboard[var] = msg
-
-        self.topics_received[var] = True
-
-        now = rospy.get_time()
-
-        self.tick_root()
-
-        # Ticks the root periodically to preserve the tick rate.
-        if ((now - self.last_tick_time) >= self.rate) and (False not in self.topics_received.values()):
-
-            self.tick_root()
-
-            self.last_tick_time = now
         
     
