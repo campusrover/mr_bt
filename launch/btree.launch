@@ -1,0 +1,11 @@
+<launch>
+
+    <arg name="treefile" default="__NONE__" /> 
+    <param name="treefile" value="$(arg treefile)"/>
+
+    <arg name="rate" default="15" />
+    <param name="rate" value = "$(arg rate)"/>
+
+    <node name="tick" pkg="mr_bt_py27" type="tick.py" output="screen"/>
+    <node name="bt" pkg="mr_bt_py27" type="main.py" output="screen"/>
+</launch>
