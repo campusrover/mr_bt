@@ -1,24 +1,28 @@
+
 #!/usr/bin/env python3
 
 import rospy
 from interpreter import TreeBuilder
 from ros_behavior_tree import ROSBehaviorTree
 
+import os
+
 if __name__ == '__main__':
 
+    path = os.path.dirname(os.path.abspath(__file__)) + "/tree_jsons/"
+    treefile = rospy.get_param("treefile")
 
-    # rospy.init_node('person_follower')
+    if treefile == "__NONE__":
+        rospy.signal_shutdown("Check filepath for json file")
 
-    trees = ['ifelse']
+    tree_filepath = path + treefile
 
-    for name in trees:
-        tb = TreeBuilder('tree_jsons/item_follower/item_follower.json')
-        # root, blackboard = tb.build_tree()
-        tb.draw_tree()
-        # # root.tick(blackboard)
-        # # print(name + ": " + str(root.tick(blackboard)))
+    rospy.init_node('btree')
 
-    # tree = ROSBehaviorTree(node, blackboard, print_vars=["goal_pos","linear_pid","angular_pid", "avg_front_dist", "nearest_dist", "nearest_wall_angle", "position", "rotation", "goal_rotation", "dist"])
-    # rospy.spin()
+    tb = TreeBuilder(tree_filepath)
+    root, blackboard = tb.build_tree()
+    # tb.draw_tree()
+        
 
-    
+    tree = ROSBehaviorTree(root, blackboard)
+    rospy.spin()
