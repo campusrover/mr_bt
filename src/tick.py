@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
     rospy.init_node("ticker")
 
-    pub = rospy.Publisher('/tick', Byte, queue_size=10)
+    pub = rospy.Publisher('/tick', Byte, queue_size=1)
 
     tps = rospy.get_param("rate")
 
