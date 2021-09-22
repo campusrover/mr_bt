@@ -1,6 +1,5 @@
-'''
 # !/usr/bin/env python3
-'''
+# | FastDetector ItemBearingErr
 
 import sys
 sys.path.append("..") # Adds higher directory to python modules path.

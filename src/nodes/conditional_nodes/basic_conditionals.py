@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+# | BoolVar BoolVarNot
 import sys
 sys.path.append("..") # Adds higher directory to python modules path.
 import rospy 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
+# | LinearStatic LinearDynamic AngularStatic AngularDynamic LinearAngularStatic LinearAngularDynamic Stop 
 
 import sys
-# sys.path.append("..") # Adds higher directory to python modules path.
 
 import rospy
 import numpy as np

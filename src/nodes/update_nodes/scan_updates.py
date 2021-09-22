@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# | CalcNearestWallAngle CalcNearestDist CalcAvgFrontDist
 
 import sys
 sys.path.append("..") # Adds higher directory to python modules path.
