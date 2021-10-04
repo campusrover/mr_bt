@@ -1,28 +1,32 @@
 
 #!/usr/bin/env python3
 
-import rospy
-from interpreter import TreeBuilder
-from ros_behavior_tree import ROSBehaviorTree
+# import rospy
+# from interpreter import TreeBuilder
+# from ros_behavior_tree import ROSBehaviorTree
+
+import nodes.action_nodes.basic_movement.linear_angular_dynamic
+
 
 import os
 
 if __name__ == '__main__':
 
-    path = os.path.dirname(os.path.abspath(__file__)) + "/tree_jsons/"
-    treefile = rospy.get_param("treefile")
+    print("hello")
+    # path = os.path.dirname(os.path.abspath(__file__)) + "/tree_jsons/"
+    # treefile = rospy.get_param("treefile")
 
-    if treefile == "__NONE__":
-        rospy.signal_shutdown("Check filepath for json file")
+    # if treefile == "__NONE__":
+    #     rospy.signal_shutdown("Check filepath for json file")
 
-    tree_filepath = path + treefile
+    # tree_filepath = path + treefile
 
-    rospy.init_node('btree')
+    # rospy.init_node('btree')
 
-    tb = TreeBuilder(tree_filepath)
-    root, blackboard = tb.build_tree()
-    # tb.draw_tree()
+    # tb = TreeBuilder(tree_filepath)
+    # root, blackboard = tb.build_tree()
+    # # tb.draw_tree()
         
 
-    tree = ROSBehaviorTree(root, blackboard)
-    rospy.spin()
+    # tree = ROSBehaviorTree(root, blackboard)
+    # rospy.spin()
