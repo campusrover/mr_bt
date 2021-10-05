@@ -75,28 +75,28 @@ from geometry_msgs.msg import Twist, Pose
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import LaserScan, CompressedImage
 
-from nodes.nodes import *
+# from nodes.nodes import *
 
-from nodes.action_nodes.basic_movement import *
+# from nodes.action_nodes.basic_movement import *
 
-from nodes.update_nodes.basic_updates import *
-from nodes.update_nodes.movement_control_updates import *
-from nodes.update_nodes.odom_updates import *
-from nodes.update_nodes.cv_updates import *
-from nodes.update_nodes.scan_updates import *
+# from nodes.update_nodes.basic_updates import *
+# from nodes.update_nodes.movement_control_updates import *
+# from nodes.update_nodes.odom_updates import *
+# from nodes.update_nodes.cv_updates import *
+# from nodes.update_nodes.scan_updates import *
 
-from nodes.conditional_nodes.scan_conditionals import *
-from nodes.conditional_nodes.basic_conditionals import *
-from nodes.conditional_nodes.odom_conditionals import *
+# from nodes.conditional_nodes.scan_conditionals import *
+# from nodes.conditional_nodes.basic_conditionals import *
+# from nodes.conditional_nodes.odom_conditionals import *
 
-from nodes.logic_nodes.logic_gate_nodes import *
-from nodes.logic_nodes.conditional_logic_nodes import *
+# from nodes.logic_nodes.logic_gate_nodes import *
+# from nodes.logic_nodes.conditional_logic_nodes import *
 
 from ros_behavior_tree import ROSBehaviorTree
 
 
 
-import .loader.import_node
+from .loader import import_node
 
 
 # master_node_dict = {

@@ -21,7 +21,8 @@ def module_name(string):
     return pythonic_string
 
 
-
+# Assumes 1 class per file with the same naming protocol. Imports the first class in
+# the specified module
 def import_node(node_class_name):
 
     node_name = module_name(node_class_name)

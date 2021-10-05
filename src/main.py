@@ -11,7 +11,6 @@ import os
 
 if __name__ == '__main__':
 
-    print("hello")
     path = os.path.dirname(os.path.abspath(__file__)) + "/tree_jsons/"
     treefile = rospy.get_param("treefile")
 
@@ -24,7 +23,7 @@ if __name__ == '__main__':
 
     tb = TreeBuilder(tree_filepath)
     root, blackboard = tb.build_tree()
-    # tb.draw_tree()
+    tb.draw_tree()
         
 
     # tree = ROSBehaviorTree(root, blackboard)
