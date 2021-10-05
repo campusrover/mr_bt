@@ -2,7 +2,7 @@
 import rospy 
 import numpy as np 
 
-from ...nodes import Conditional
+from ...nodes.conditional import Conditional
 
 
 

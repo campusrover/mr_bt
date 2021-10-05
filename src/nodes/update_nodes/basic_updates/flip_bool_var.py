@@ -4,7 +4,7 @@ import rospy
 import numpy as np
 import time
 
-from ...nodes import Update
+from ...nodes.update import Update
 
 
 '''

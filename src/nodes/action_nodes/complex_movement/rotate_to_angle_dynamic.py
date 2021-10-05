@@ -8,7 +8,7 @@ import math
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 
-from ...nodes import Action
+from ...nodes.action import Action
 
 
 

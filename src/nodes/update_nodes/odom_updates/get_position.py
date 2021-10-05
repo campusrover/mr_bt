@@ -5,7 +5,7 @@ import numpy as np
 import math
 from nav_msgs.msg import Odometry
 
-from ...nodes import Update
+from ...nodes.update import Update
 
 
 class GetPosition(Update):

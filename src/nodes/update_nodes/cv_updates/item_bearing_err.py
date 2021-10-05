@@ -8,7 +8,7 @@ import math
 import torch
 import time
 
-from ...nodes import Update
+from ...nodes.update import Update
 
 
 

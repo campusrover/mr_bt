@@ -4,7 +4,7 @@ import rospy
 import numpy as np 
 from sensor_msgs.msg import LaserScan
 
-from ...nodes import Update
+from ...nodes.update import Update
 
 
 class CalcAvgFrontDist(Update):

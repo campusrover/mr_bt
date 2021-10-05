@@ -2,7 +2,7 @@ from pathlib import Path
 import inspect
 import importlib
 
-
+# Converts from string format "ThisIsAString" to "this_is_a_string"
 def module_name(string):
 
     pythonic_string = ""
@@ -20,9 +20,13 @@ def module_name(string):
 
     return pythonic_string
 
-def import_node(nodename):
 
-    node_filepath = str(list(Path("nodes").rglob(nodename + ".py"))[0])
+
+def import_node(node_class_name):
+
+    node_name = module_name(node_class_name)
+
+    node_filepath = str(list(Path("nodes").rglob(node_name + ".py"))[0])
 
     node_module_name = node_filepath.replace("/", ".").replace(".py", "")
 

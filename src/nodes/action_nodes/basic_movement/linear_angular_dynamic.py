@@ -5,7 +5,7 @@ import rospy
 
 from geometry_msgs.msg import Twist
 
-from ...nodes import Action
+from ...nodes.action import Action
 
 
 
