@@ -95,6 +95,10 @@ from nodes.logic_nodes.conditional_logic_nodes import *
 from ros_behavior_tree import ROSBehaviorTree
 
 
+
+import .loader.import_node
+
+
 # master_node_dict = {
     
 #     "Conditional":Conditional, "Action":Action, "Update":Update, "Sequencer":Sequencer, "Selector":Selector, "Multitasker":Multitasker,
@@ -179,7 +183,7 @@ class TreeBuilder:
                 else:
                     self.blackboard[var] = node['blackboard'][var] 
 
-        return eval(node['type'])(*parameters)
+        return import_node(node['type'])(*parameters)
 
 
     def draw_tree(self):
