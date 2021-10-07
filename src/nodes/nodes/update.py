@@ -14,3 +14,6 @@ class Update(Node):
     to construct their own updates with custom methods.
     '''
 
+    def tick(self, blackboard):
+        
+        return super.tick(blackboard)

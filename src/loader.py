@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
 from pathlib import Path
 import inspect
 import importlib
+from sys import stdout
 
 # Converts from string format "ThisIsAString" to "this_is_a_string"
 def module_name(string):
@@ -27,7 +29,11 @@ def import_node(node_class_name):
 
     node_name = module_name(node_class_name)
 
-    node_filepath = str(list(Path("nodes").rglob(node_name + ".py"))[0])
+    node_Path = list(Path("nodes").rglob(node_name + ".py"))
+
+    stdout.write(node_class_name + ": " + str(node_Path) + "\n")
+
+    node_filepath = str(node_Path[0])
 
     node_module_name = node_filepath.replace("/", ".").replace(".py", "")
 

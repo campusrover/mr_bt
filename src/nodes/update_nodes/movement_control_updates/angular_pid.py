@@ -11,7 +11,7 @@ from ...nodes.update import Update
 This class adds a variable to the blackboard which specifies an angular velocity for which
 to turn so that the robot can track an object.
 '''
-class AngularPID(Update):
+class AngularPid(Update):
 
 
     def __init__(self, pid_err_var_name, nearest_dist_var_name, nearest_angle_var_name, kp, kd, kp2, dwall, offset=0):

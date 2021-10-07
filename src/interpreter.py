@@ -70,6 +70,7 @@ import numpy as np
 import json
 import graphviz
 import sys
+import os
 
 from geometry_msgs.msg import Twist, Pose
 from nav_msgs.msg import Odometry
@@ -96,7 +97,7 @@ from ros_behavior_tree import ROSBehaviorTree
 
 
 
-from .loader import import_node
+from loader import import_node
 
 
 # master_node_dict = {
@@ -183,7 +184,11 @@ class TreeBuilder:
                 else:
                     self.blackboard[var] = node['blackboard'][var] 
 
-        return import_node(node['type'])(*parameters)
+        sys.stdout.write(str(parameters))
+        node_class = import_node(node['type'])(*parameters)
+        sys.stdout.write(node['type'])
+
+        return node_class
 
 
     def draw_tree(self):

@@ -2,13 +2,12 @@
 
 import rospy
 import numpy as np 
-from sensor_msgs.msg import LaserScan
 
 from ...nodes.update import Update
 
 
 
-class LinearPID(Update):
+class LinearPid(Update):
 
     def __init__(self, linear_pid_var_name, diff_var_name, max_vel, offset=0):
 

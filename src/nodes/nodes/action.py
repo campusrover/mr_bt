@@ -15,3 +15,6 @@ class Action(Node):
     This class is not meant to be initialized, but serves as an abstract parent class for users
     to construct their own actions with custom methods.
     '''
+    def tick(self, blackboard):
+        
+        return super().tick(blackboard)
