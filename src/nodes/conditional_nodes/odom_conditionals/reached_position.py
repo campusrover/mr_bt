@@ -10,7 +10,7 @@ class ReachedPosition(Conditional):
 
     def __init__(self, odom_var_name: str, goal_pos_var_name: str, error: float):
 
-        super(ReachedPosition, self).__init__()
+        super().__init__()
 
         self.odom_var_name = odom_var_name
         self.goal_pos_var_name = goal_pos_var_name

@@ -15,7 +15,7 @@ class WallAhead(Conditional):
 
     def __init__(self, dist: float, fov: Union[float, int]):
 
-        super(WallAhead, self).__init__()
+        super().__init__()
 
         self.dist = dist
         self.view_frac = fov/720

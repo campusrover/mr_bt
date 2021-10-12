@@ -10,7 +10,7 @@ class LinearAngularStatic(Action):
 
     def __init__(self, lin_vel: float, ang_vel: float):
 
-        super(LinearAngularStatic, self).__init__()
+        super().__init__()
 
         self.twist = Twist()
         self.twist.linear.x = lin_vel

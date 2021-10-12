@@ -10,7 +10,7 @@ class BoolVarNot(Conditional):
 
     def __init__(self, var_name: str):
 
-        super(BoolVarNot, self).__init__()
+        super().__init__()
 
         self.var_name = var_name
 

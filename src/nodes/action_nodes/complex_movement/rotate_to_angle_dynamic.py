@@ -13,7 +13,7 @@ class RotateToAngleDynamic(Action):
 
     def __init__(self, angle_var_name: str, curr_angle_var_name: str):
 
-        super(RotateToAngleDynamic, self).__init__()
+        super().__init__()
 
         self.angle_var_name = angle_var_name
         self.curr_angle_var_name = curr_angle_var_name

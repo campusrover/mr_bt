@@ -10,7 +10,7 @@ class LinearAngularDynamic(Action):
 
     def __init__(self, linear_var_name: str, angular_var_name: str):
 
-        super(LinearAngularDynamic, self).__init__()
+        super().__init__()
 
         self.lin_var_name, self.ang_var_name = linear_var_name, angular_var_name
         self.twist = Twist()

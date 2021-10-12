@@ -11,7 +11,7 @@ class WallAtAngleDynamic(Conditional):
 
     def __init__(self, angle_var_name: str, scan_var_name: str, dist: Union[float,int], fov: Union[float,int]):
 
-        super(WallAtAngleDynamic, self).__init__()
+        super().__init__()
 
         self.angle_var_name = angle_var_name
         self.scan_var_name = scan_var_name

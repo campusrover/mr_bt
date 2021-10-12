@@ -13,7 +13,7 @@ class Stop(Action):
 
     def __init__(self):
 
-        super(Stop, self).__init__()
+        super().__init__()
 
         self.twist = Twist()
 
