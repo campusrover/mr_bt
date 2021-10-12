@@ -12,6 +12,8 @@ class GetPosition(Update):
 
     def __init__(self, odom_var_name, position_var_name):
 
+        super().__init__()
+
         self.odom_var_name = odom_var_name
         self.position_var_name = position_var_name
 

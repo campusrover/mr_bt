@@ -66,39 +66,38 @@ RULES FOR THE JSON FORMATTING:
 '''
 
 import json
-import graphviz
 
 from loader import import_node
+from nodes.nodes.node import Node
 
-
-
+from std_msgs.msg import *
+from nav_msgs.msg import *
+from sensor_msgs.msg import *
 
 
 class TreeBuilder:
 
 
-    def __init__(self, path:str, dot:graphviz.Digraph):
+    def __init__(self, path:str):
 
         with open(path) as f:
             self.tree_dict = json.load(f)
-
-        self.dot = dot
 
         self.blackboard = {}
 
 
 
-    def build_tree(self):
+    def build_tree(self) -> tuple([Node, dict]):
         '''
         The recursive function attach_node() is called on the root of the tree, then the 
         ROS behavior tree root and the blackboard are returned.
         '''
         self.root = self.attach_node(self.tree_dict)
 
-        return self.root, self.blackboard, self.dot
+        return self.root, self.blackboard
 
 
-    def attach_node(self, node):
+    def attach_node(self, node: dict) -> Node:
 
         parameters = {}
 
@@ -127,37 +126,22 @@ class TreeBuilder:
                 if var[0] == '/':
                     self.blackboard[var] = eval(node['blackboard'][var])
                 else:
-                    self.blackboard[var] = node['blackboard'][var] 
-        node_class = import_node(node['type'])(**parameters)
-        node_id = node_class.id
-        node_label = node['name'] + "\ntype: " + node['type']
-        self.dot.node(node_id, node_label)
+                    self.blackboard[var] = node['blackboard'][var]
 
-        if "children" in list(parameters.keys()):
-            for child_class in parameters["children"]:
-                self.dot.edge(node_class.id, child_class.id)
+        node_class = import_node(node['type'])(**parameters)
 
         return node_class
-
-
-    def graph(self):
-
-        return self.dot
-
     
-    def link_blackboard(self, root_name, blackboard):
-        '''
-        Links the blackboard defined by any of the nodes in the tree and attaches it
-        to the passed node in the graph and displays its contents.
-        '''
+    # def link_blackboard(self, root_name, blackboard):
+    #     '''
+    #     Links the blackboard defined by any of the nodes in the tree and attaches it
+    #     to the passed node in the graph and displays its contents.
+    #     '''
         
-        blackboard_string = 'BLACKBOARD\n\n'
-        for key in blackboard:
-            blackboard_string += key + '  :  ' + str(blackboard[key]) + '\n'
-        self.dot.node('Blackboard', blackboard_string, shape='rectangle')
-        self.dot.edge('Blackboard', root_name)
-
-
-
+    #     blackboard_string = 'BLACKBOARD\n\n'
+    #     for key in blackboard:
+    #         blackboard_string += key + '  :  ' + str(blackboard[key]) + '\n'
+    #     self.dot.node('Blackboard', blackboard_string, shape='rectangle')
+    #     self.dot.edge('Blackboard', root_name)
 
 

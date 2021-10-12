@@ -16,6 +16,8 @@ class CalcNearestWallAngle(Update):
 
     def __init__(self, scan_var_name, angle_var_name, degrees=False):
 
+        super().__init__()
+
         self.angle_var_name = angle_var_name
 
         self.scan_var_name = scan_var_name

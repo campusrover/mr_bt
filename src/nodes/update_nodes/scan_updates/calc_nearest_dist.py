@@ -17,6 +17,8 @@ class CalcNearestDist(Update):
 
     def __init__(self, scan_var_name, dist_var_name):
 
+        super().__init__()
+
         self.dist_var_name = dist_var_name
 
         self.scan_var_name = scan_var_name

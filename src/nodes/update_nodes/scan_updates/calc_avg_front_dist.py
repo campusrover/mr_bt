@@ -12,6 +12,8 @@ class CalcAvgFrontDist(Update):
 
     def __init__(self, scan_var_name, dist_var_name, fov):
 
+        super().__init__()
+
         self.scan_var_name = scan_var_name
 
         self.dist_var_name = dist_var_name

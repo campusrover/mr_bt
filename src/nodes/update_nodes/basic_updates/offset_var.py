@@ -14,6 +14,8 @@ class OffsetVar(Update):
 
     def __init__(self, var_name, offset_var_name, offset):
 
+        super().__init__()
+
         self.var_name = var_name
 
         self.offset_var_name = offset_var_name

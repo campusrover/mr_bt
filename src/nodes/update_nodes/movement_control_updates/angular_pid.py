@@ -16,6 +16,8 @@ class AngularPid(Update):
 
     def __init__(self, pid_err_var_name, nearest_dist_var_name, nearest_angle_var_name, kp, kd, kp2, dwall, offset=0):
 
+        super().__init__()
+
         self.pid_err_var_name = pid_err_var_name
         self.nearest_dist_var_name = nearest_dist_var_name
         self.nearest_angle_var_name = nearest_angle_var_name

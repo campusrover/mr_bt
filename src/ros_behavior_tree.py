@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import rospy
-import message_filters
-import graphviz
+import time
+from grapher import Grapher
 
 from std_msgs.msg import Byte
 
@@ -32,13 +32,13 @@ class ROSBehaviorTree:
             ]
 
     '''
-    def __init__(self, root, blackboard, dot=None, print_vars=[]):
+    def __init__(self, root, blackboard, print_vars=[]):
 
         self.curr_tick = 1
 
         self.print_vars = print_vars
 
-        self.dot = dot
+        self.graph = Grapher(root)
 
         self.root = root
 
@@ -62,6 +62,11 @@ class ROSBehaviorTree:
 
         status, status_dict = self.root.tick(self.blackboard)
 
+        status_dict = {status: self.root.id, **status_dict}
+
+        # start = rospy.Time.now().to_sec()
+        self.graph.show(status_dict)
+        # print(rospy.Time.now().to_sec() - start)
 
 
         for var in self.print_vars:
@@ -76,15 +81,5 @@ class ROSBehaviorTree:
 
 
 
-    def render_graph(self, status_dict):
-        if self.dot == None:
-            pass
-        else:
-            for key in status_dict:
-                node_id = key
-                status = status_dict[key]
-
-                if status == "failure":
-                    self.dot.node_attr(node_id, color)
         
     

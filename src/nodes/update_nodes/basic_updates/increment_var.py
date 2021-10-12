@@ -16,6 +16,8 @@ class IncrementVar(Update):
 
     def __init__(self, var_name, increment):
 
+        super().__init__()
+
         self.var_name = var_name
         self.increment = increment
 

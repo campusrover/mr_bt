@@ -21,9 +21,7 @@ if __name__ == '__main__':
     rospy.init_node('btree')
 
     tb = TreeBuilder(tree_filepath)
-    root, blackboard = tb.build_tree()
-    tb.draw_tree()
-        
+    root, blackboard = tb.build_tree()        
 
     tree = ROSBehaviorTree(root, blackboard)
     rospy.spin()

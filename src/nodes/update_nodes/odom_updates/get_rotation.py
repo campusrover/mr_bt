@@ -16,6 +16,8 @@ class GetRotation(Update):
 
     def __init__(self, odom_var_name, rotation_var_name, degrees=True):
 
+        super().__init__()
+
         self.odom_var_name = odom_var_name
         self.rotation_var_name = rotation_var_name
 

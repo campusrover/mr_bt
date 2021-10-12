@@ -11,6 +11,8 @@ class LinearPid(Update):
 
     def __init__(self, linear_pid_var_name, diff_var_name, max_vel, offset=0):
 
+        super().__init__()
+
         self.linear_pid_var_name = linear_pid_var_name
         self.diff_var_name = diff_var_name
         self.max_vel = max_vel

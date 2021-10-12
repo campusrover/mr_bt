@@ -12,6 +12,8 @@ class AngleToPosition(Update):
 
     def __init__(self, goal_position_var_name, curr_position_var_name, goal_rotation_var_name, rotation_var_name):
 
+        super().__init__()
+
         self.goal_position_var_name = goal_position_var_name
         self.curr_position_var_name = curr_position_var_name
         self.goal_rotation_var_name = goal_rotation_var_name
