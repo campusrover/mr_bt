@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 
+from abc import ABC, abstractmethod
+
+from .child_node import ChildNode
 from .node import Node
 
-class Update(Node):
+
+class Update(ChildNode, ABC):
     '''
     The Update class is a leaf node in the behavior tree which performs some calculation/algorithm
     on information in the blackboard and updates the blackboard with new information.
@@ -14,6 +18,11 @@ class Update(Node):
     to construct their own updates with custom methods.
     '''
 
-    def tick(self, blackboard):
-        
-        return super.tick(blackboard)
+    @abstractmethod
+    def update_blackboard(self, blackboard:dict) -> str:
+        return
+
+    
+    def tick(self, blackboard:dict) -> tuple([str, dict]):
+        status = self.update_blackboard(blackboard)
+        return status, {self.id : status}

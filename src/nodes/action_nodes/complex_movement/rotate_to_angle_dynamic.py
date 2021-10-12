@@ -19,6 +19,8 @@ class RotateToAngleDynamic(Action):
 
     def __init__(self, angle_var_name, curr_angle_var_name):
 
+        super(RotateToAngleDynamic, self).__init__()
+
         self.angle_var_name = angle_var_name
 
         self.curr_angle_var_name = curr_angle_var_name
@@ -28,7 +30,7 @@ class RotateToAngleDynamic(Action):
         self.pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
 
-    def tick(self, blackboard):
+    def execute(self, blackboard:dict) -> str:
 
         try:
 

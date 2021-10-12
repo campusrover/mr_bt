@@ -33,7 +33,7 @@ class FastDetector(Update):
         self.label_dict_var_name = label_dict_var_name
 
 
-    def tick(self, blackboard):
+    def update_blackboard(self, blackboard:dict) -> str:
 
         try:
 

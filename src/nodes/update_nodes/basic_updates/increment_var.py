@@ -20,7 +20,7 @@ class IncrementVar(Update):
         self.increment = increment
 
     
-    def tick(self, blackboard):
+    def update_blackboard(self, blackboard:dict) -> str:
 
         try:
 

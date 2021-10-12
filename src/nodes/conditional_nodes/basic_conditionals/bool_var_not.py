@@ -11,9 +11,11 @@ class BoolVarNot(Conditional):
 
     def __init__(self, var_name):
 
+        super(BoolVarNot, self).__init__()
+
         self.var_name = var_name
 
 
-    def condition(self, blackboard):
+    def condition(self, blackboard:dict) -> bool:
 
         return not blackboard[self.var_name]

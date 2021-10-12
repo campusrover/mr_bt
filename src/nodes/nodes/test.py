@@ -11,7 +11,7 @@ class Test(Node):
         self.print_statement = print_statement
 
     
-    def tick(self, blackboard):
+    def tick(self, blackboard:dict) -> dict:
 
         print(self.print_statement)
 

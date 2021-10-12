@@ -11,14 +11,19 @@ class Selector(ParentNode):
     status back up the tree. If each child returns "failure", then the Selector will return 
     "failure" back up the tree.
     '''
+
+    def __init__(self, children:list):
+        super(Selector, self).__init__(children)
         
-    def tick(self, blackboard):
+    def control_flow(self, blackboard:dict) -> tuple([str, dict]):
 
         status = 'failure'
+        status_dict = {}
         i = 0
         while (status == 'failure') and (i < self.num_children):
 
-            status = self.children[i].tick(blackboard)
+            status, child_status_dict = self.children[i].tick(blackboard)
+            status_dict = {**status_dict, **child_status_dict}
             i += 1
         
-        return status
+        return status, status_dict

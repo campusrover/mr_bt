@@ -31,15 +31,15 @@ def import_node(node_class_name):
 
     node_Path = list(Path("nodes").rglob(node_name + ".py"))
 
-    stdout.write(node_class_name + ": " + str(node_Path) + "\n")
+    # stdout.write(node_class_name + ": " + str(node_Path) + "\n")
 
     node_filepath = str(node_Path[0])
 
     node_module_name = node_filepath.replace("/", ".").replace(".py", "")
 
     node_module = importlib.import_module(node_module_name)
+    node_class =  getattr(node_module, node_class_name)
 
-    node_class = inspect.getmembers(node_module, inspect.isclass)[0][1]
 
     return node_class
 

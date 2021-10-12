@@ -17,7 +17,7 @@ class AngleToPosition(Update):
         self.goal_rotation_var_name = goal_rotation_var_name
         self.rotation_var_name = rotation_var_name
 
-    def tick(self, blackboard):
+    def update_blackboard(self, blackboard:dict) -> str:
 
         goal_pos = blackboard[self.goal_position_var_name]
         curr_pos = blackboard[self.curr_position_var_name]

@@ -16,7 +16,7 @@ class GetPosition(Update):
         self.position_var_name = position_var_name
 
 
-    def tick(self, blackboard):
+    def update_blackboard(self, blackboard:dict) -> str:
 
         try:
 

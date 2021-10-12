@@ -25,5 +25,5 @@ if __name__ == '__main__':
     tb.draw_tree()
         
 
-    # tree = ROSBehaviorTree(root, blackboard)
-    # rospy.spin()
+    tree = ROSBehaviorTree(root, blackboard)
+    rospy.spin()

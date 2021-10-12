@@ -12,7 +12,9 @@ from ...nodes.action import Action
 class LinearAngularStatic(Action):
 
 
-    def __init__(self, lin_vel, ang_vel):
+    def __init__(self, lin_vel:float, ang_vel:float):
+
+        super(LinearAngularStatic, self).__init__()
 
         self.twist = Twist()
 
@@ -23,7 +25,7 @@ class LinearAngularStatic(Action):
         self.pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
 
-    def tick(self, blackboard):
+    def execute(self, blackboard:dict) -> str:
 
         self.pub.publish(self.twist)
 

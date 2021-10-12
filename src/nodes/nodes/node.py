@@ -2,6 +2,7 @@
 
 from abc import ABC, abstractmethod
 import random
+from sys import stdout
 
 
 class Node(ABC):
@@ -12,8 +13,9 @@ class Node(ABC):
     '''
 
     def __init__(self):
+        self.id = str(id(self))
+        self.name = self.__class__.__name__
 
-        return None 
 
 
     '''
@@ -21,10 +23,6 @@ class Node(ABC):
     the node have failed, "success" if they have completed, or "running" if they are still in progress.
     '''
     @abstractmethod
-    def tick(self):
+    def tick(self, blackboard:dict) -> tuple([str, dict]):
+        return "", {}
 
-        options = ['failure', 'success', 'running']
-
-        status = random.choice(options)
-
-        return status

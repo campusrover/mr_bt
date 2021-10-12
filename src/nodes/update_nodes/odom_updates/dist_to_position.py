@@ -19,7 +19,7 @@ class DistToPosition(Update):
         self.dist_var_name = dist_var_name
 
 
-    def tick(self, blackboard):
+    def update_blackboard(self, blackboard:dict) -> str:
 
 
         curr_pos = blackboard[self.curr_position_var_name]

@@ -11,31 +11,25 @@ from ...nodes.action import Action
 
 class LinearAngularDynamic(Action):
 
+    
+    def __init__(self, linear_var_name: str, angular_var_name: str):
 
-    def __init__(self, linear_var_name, angular_var_name):
+        super(LinearAngularDynamic, self).__init__()
 
-        self.var_name = [linear_var_name, angular_var_name]
+        self.lin_var_name, self.ang_var_name = linear_var_name, angular_var_name
 
         self.twist = Twist()
 
         self.pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
 
-    def tick(self, blackboard):
+    def execute(self, blackboard:dict) -> str:
 
         try:
 
-            if isinstance(self.var_name, list):
-
-                lin_vel, ang_vel = blackboard[self.var_name[0]], blackboard[self.var_name[1]]
-
-            else:
-
-                lin_vel, ang_vel = blackboard[self.var_name][0], blackboard[self.var_name[1]]
-
             
-            self.twist.linear.x = lin_vel
-            self.twist.angular.z = ang_vel
+            self.twist.linear.x = blackboard[self.lin_var_name]
+            self.twist.angular.z = blackboard[self.ang_var_name]
 
             self.pub.publish(self.twist)
 

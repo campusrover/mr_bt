@@ -10,14 +10,20 @@ class Sequencer(ParentNode):
     "success" back up the tree.
     '''
 
-    def tick(self, blackboard):
+    def __init__(self, children:list):
+        super(Sequencer, self).__init__(children)
+
+
+    def control_flow(self, blackboard:dict) -> tuple([str, dict]):
 
         status = 'success'
+        status_dict = {}
         i = 0
 
         while (status == 'success') and (i < self.num_children):
 
-            status = self.children[i].tick(blackboard)
+            status, child_status_dict = self.children[i].tick(blackboard)
+            status_dict = {**status_dict, **child_status_dict}
             i += 1
 
-        return status
+        return status, status_dict

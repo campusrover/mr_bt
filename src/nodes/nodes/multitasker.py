@@ -14,23 +14,34 @@ class Multitasker(ParentNode):
     return "running". If all of the children nodes return "success", then the Multitasker will also return "success".
     '''
 
-    def tick(self, blackboard):
+    def __init__(self, children:list):
+        super(Multitasker, self).__init__(children)
 
-        statuses = []
+    
+
+    def control_flow(self, blackboard:dict) -> tuple([str, dict]):
+
+        statuses = {}
 
         with ThreadPoolExecutor() as executor:
 
             threads = [executor.submit(child.tick, blackboard) for child in self.children]
-            statuses = [thread.result() for thread in threads]
+            results = [thread.result() for thread in threads]
+
+        status_dict = {}
+        statuses = []
+        for result in results:
+            statuses.append(result[0])
+            status_dict.update(result[1])
+        
+        status = "running"
 
         if "failure" in statuses:
 
-            return "failure"
+            return "failure", status_dict
 
         elif "running" in statuses:
             
-            return "running"
+            return "running", status_dict
 
-        else:
-
-            return "success"
+        return "success", status_dict

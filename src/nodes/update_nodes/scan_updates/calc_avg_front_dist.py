@@ -19,7 +19,7 @@ class CalcAvgFrontDist(Update):
         self.view_frac = fov/720
 
 
-    def tick(self, blackboard):
+    def update_blackboard(self, blackboard:dict) -> str:
 
         try:
 

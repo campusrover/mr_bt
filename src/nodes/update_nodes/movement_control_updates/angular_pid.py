@@ -31,7 +31,7 @@ class AngularPid(Update):
         self.tn_prev = rospy.Time.now().to_sec()
 
 
-    def tick(self, blackboard):
+    def update_blackboard(self, blackboard:dict) -> str:
 
         try:
 

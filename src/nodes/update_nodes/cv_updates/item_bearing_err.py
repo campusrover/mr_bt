@@ -26,7 +26,7 @@ class ItemBearingErr(Update):
         self.threshold = threshold
 
 
-    def tick(self, blackboard):
+    def update_blackboard(self, blackboard:dict) -> str:
 
         try:
 

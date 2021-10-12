@@ -5,7 +5,7 @@
         
         {
             "name":"Calculate angular velocity necessary to face towards the position",
-            "type":"AngularPID",
+            "type":"AngularPid",
             "pid_err_var_name":"angular_goal_pid",
             "nearest_dist_var_name":"dist",
             "nearest_angle_var_name":"goal_rotation",
@@ -17,7 +17,7 @@
           },
           {
             "name":"Calculate linear velocity to get to position",
-            "type":"LinearPID",
+            "type":"LinearPid",
             "linear_pid_var_name":"linear_goal_pid",
             "diff_var_name":"dist",
             "max_vel":0.1,

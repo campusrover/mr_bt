@@ -21,7 +21,7 @@ class OffsetVar(Update):
         self.offset = offset
 
 
-    def tick(self, blackboard):
+    def update_blackboard(self, blackboard:dict) -> str:
 
         try:
 

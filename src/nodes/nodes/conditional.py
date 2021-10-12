@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
+from abc import ABC, abstractmethod
+
+from .child_node import ChildNode
 from .node import Node
 
-class Conditional(Node):
+class Conditional(ChildNode, ABC):
     '''
     The Conditional class is a leaf node in the behavior tree which returns either
     "success" or "failure" based on the boolean output from the condition function.
@@ -14,22 +17,21 @@ class Conditional(Node):
     This class is not meant to be initialized, but serves as an abstract parent class for
     users to construct their own Conditional nodes with custom conditional functions.
     '''
-
     
     @abstractmethod
-    def condition(self, blackboard):
+    def condition(self, blackboard:dict) -> bool:
 
         return True
 
 
-    def tick(self, blackboard):
+    def tick(self, blackboard:dict) -> dict:
 
         condition_met = self.condition(blackboard)
 
+        status = 'failure'
+
         if condition_met:
             
-            return 'success'
-        
-        else:
+            status = 'success'
 
-            return 'failure'     
+        return status, {self.id : status}   

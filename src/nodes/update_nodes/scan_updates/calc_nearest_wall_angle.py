@@ -23,7 +23,7 @@ class CalcNearestWallAngle(Update):
         self.degrees = degrees
 
     
-    def tick(self, blackboard):
+    def update_blackboard(self, blackboard:dict) -> str:
 
         try:
 

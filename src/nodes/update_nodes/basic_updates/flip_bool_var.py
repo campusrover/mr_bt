@@ -18,7 +18,7 @@ class FlipBoolVar(Update):
         self.var_name = var_name
 
 
-    def tick(self, blackboard):
+    def update_blackboard(self, blackboard:dict) -> str:
 
         try:
 

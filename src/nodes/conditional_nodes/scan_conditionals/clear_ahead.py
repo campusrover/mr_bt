@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from typing import Union
 import rospy 
 import numpy as np 
 
@@ -13,14 +14,16 @@ Inverse of WallAhead conditional.
 class ClearAhead(Conditional):
 
 
-    def __init__(self, dist, fov):
+    def __init__(self, dist:float, fov:Union[float, int]):
+
+        super(ClearAhead, self).__init__()
 
         self.dist = dist
 
         self.view_frac = fov/360
 
 
-    def condition(self, blackboard):
+    def condition(self, blackboard:dict) -> bool:
 
         ranges = np.array(blackboard['/scan'].ranges)
 

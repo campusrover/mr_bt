@@ -13,14 +13,16 @@ from nav_msgs.msg import Odometry
 
 class ReachedPosition(Conditional):
 
-    def __init__(self, odom_var_name, goal_pos_var_name, error):
+    def __init__(self, odom_var_name:str, goal_pos_var_name:str, error:float):
+
+        super(ReachedPosition, self).__init__()
 
         self.odom_var_name = odom_var_name
         self.goal_pos_var_name = goal_pos_var_name
         self.error = error
 
     
-    def condition(self, blackboard):
+    def condition(self, blackboard:dict) -> bool:
 
 
         pos = [blackboard[self.odom_var_name].pose.pose.position.x, blackboard[self.odom_var_name].pose.pose.position.y]

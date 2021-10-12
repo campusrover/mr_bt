@@ -11,10 +11,12 @@ class BoolVar(Conditional):
 
     def __init__(self, var_name):
 
+        super(BoolVar, self).__init__()
+
         self.var_name = var_name
 
 
-    def condition(self, blackboard):
+    def condition(self, blackboard:dict) -> bool:
 
         return blackboard[self.var_name]
 

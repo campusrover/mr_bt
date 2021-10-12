@@ -65,65 +65,11 @@ RULES FOR THE JSON FORMATTING:
 
 '''
 
-import rospy
-import numpy as np
 import json
 import graphviz
-import sys
-import os
-
-from geometry_msgs.msg import Twist, Pose
-from nav_msgs.msg import Odometry
-from sensor_msgs.msg import LaserScan, CompressedImage
-
-# from nodes.nodes import *
-
-# from nodes.action_nodes.basic_movement import *
-
-# from nodes.update_nodes.basic_updates import *
-# from nodes.update_nodes.movement_control_updates import *
-# from nodes.update_nodes.odom_updates import *
-# from nodes.update_nodes.cv_updates import *
-# from nodes.update_nodes.scan_updates import *
-
-# from nodes.conditional_nodes.scan_conditionals import *
-# from nodes.conditional_nodes.basic_conditionals import *
-# from nodes.conditional_nodes.odom_conditionals import *
-
-# from nodes.logic_nodes.logic_gate_nodes import *
-# from nodes.logic_nodes.conditional_logic_nodes import *
-
-from ros_behavior_tree import ROSBehaviorTree
-
-
 
 from loader import import_node
 
-
-# master_node_dict = {
-    
-#     "Conditional":Conditional, "Action":Action, "Update":Update, "Sequencer":Sequencer, "Selector":Selector, "Multitasker":Multitasker,
-#     "LinearStatic":LinearStatic, "LinearDynamic":LinearDynamic, "AngularStatic":AngularStatic, "AngularDynamic":AngularDynamic,
-#     "LinearAngularStatic":LinearAngularStatic, "LinearAngularDynamic":LinearAngularDynamic, "Stop": Stop,
-#     "FlipBoolVar":FlipBoolVar, "IncrementVar":IncrementVar, "OffsetVar":OffsetVar,
-#     "LinearPID":LinearPID, "AngularPID":AngularPID,
-#     "GetPosition":GetPosition, "GetRotation":GetRotation,
-#     "FastDetector":FastDetector, "ItemBearingErr":ItemBearingErr,
-#     "CalcNearestWallAngle":CalcNearestWallAngle, "CalcNearestDist":CalcNearestDist, "CalcAvgFrontDist":CalcAvgFrontDist,
-#     "WallAhead":WallAhead, "ClearAhead":ClearAhead,
-#     "BoolVar":BoolVar, "BoolVarNot":BoolVarNot
-# }
-
-# master_msg_dict = {
-
-#     "Twist":Twist, "LaserScan":LaserScan, "CompressedImage":CompressedImage, "Odometry":Odometry, "Pose":Pose
-# }
-
-# no_no_dict = {
-#     '__annotations__':None, '__builtins__':None, '__cached__':None, '__doc__':None, '__file__':None,
-#     '__loader__':None,'__name__':None,'__package__':None,'__spec__':None,'graphviz':None, 'json':None,'np':None,
-#     'rospy':None, 'sys':None, 'ROSBehaviorTree':None, 'TreeBuilder':None
-# }
 
 
 
@@ -131,12 +77,12 @@ from loader import import_node
 class TreeBuilder:
 
 
-    def __init__(self, path, comment=""):
+    def __init__(self, path:str, dot:graphviz.Digraph):
 
         with open(path) as f:
             self.tree_dict = json.load(f)
 
-        self.dot = graphviz.Digraph(format='png', comment='Behavior Tree')
+        self.dot = dot
 
         self.blackboard = {}
 
@@ -147,14 +93,14 @@ class TreeBuilder:
         The recursive function attach_node() is called on the root of the tree, then the 
         ROS behavior tree root and the blackboard are returned.
         '''
-        root = self.attach_node(self.tree_dict)
+        self.root = self.attach_node(self.tree_dict)
 
-        return root, self.blackboard  
+        return self.root, self.blackboard, self.dot
 
 
     def attach_node(self, node):
 
-        parameters = []
+        parameters = {}
 
         specials = ['name', 'type', 'blackboard']
 
@@ -162,18 +108,17 @@ class TreeBuilder:
 
             if parameter == 'children': # Initializes all children recursively and appends them to a list which is then
                                         # passed as another parameter in the node
-                children = []
+                parameters["children"] = []
 
                 for child in node['children']:
                     if 'ref' in child: # Handles the case where the child is a reference to another json file
                         with open(child['ref']) as f:
                             child = json.load(f)
-                    children.append(self.attach_node(child))
-                
-                parameters.append(children)
+                    parameters["children"].append(self.attach_node(child))
+
             elif parameter not in specials:
                 
-                parameters.append(node[parameter])
+                parameters[parameter] = node[parameter]
 
         if 'blackboard' in node: # If the blackboard is passed as a parameter its contents are added to the tree blackboard
 
@@ -183,25 +128,21 @@ class TreeBuilder:
                     self.blackboard[var] = eval(node['blackboard'][var])
                 else:
                     self.blackboard[var] = node['blackboard'][var] 
+        node_class = import_node(node['type'])(**parameters)
+        node_id = node_class.id
+        node_label = node['name'] + "\ntype: " + node['type']
+        self.dot.node(node_id, node_label)
 
-        sys.stdout.write(str(parameters))
-        node_class = import_node(node['type'])(*parameters)
-        sys.stdout.write(node['type'])
+        if "children" in list(parameters.keys()):
+            for child_class in parameters["children"]:
+                self.dot.edge(node_class.id, child_class.id)
 
         return node_class
 
 
-    def draw_tree(self):
-        '''
-        The recursive function link_nodes() is called on the root of the tree, then the 
-        the graph is drawn and a pdf is created using a Digraph object from GraphViz.
-        '''
+    def graph(self):
 
-        root_name, blackboard = self.link_nodes(self.tree_dict)
-
-        self.link_blackboard(root_name, blackboard)
-
-        self.dot.render("tree_visuals/tree", view=True)
+        return self.dot
 
     
     def link_blackboard(self, root_name, blackboard):
@@ -217,40 +158,6 @@ class TreeBuilder:
         self.dot.edge('Blackboard', root_name)
 
 
-    def link_nodes(self, node, parent_label=None, blackboard={}):
-
-        label_string = node['name'] + "\ntype: " + node['type']
-
-        node_label = node['name']
-
-        if node['type'] == 'Selector': # Changes the shape of the node depending on the type
-            shape = "box"
-        elif node['type'] == "Sequencer":
-            shape = "cds"
-        else:
-            shape = "oval"
-
-        self.dot.node(node_label, label_string, shape=shape)
-
-        if 'blackboard' in node: # Blackboard is visualized as being passed into the node it is initialized in
-            for var in node['blackboard']:
-                blackboard[var] = node['blackboard'][var]
-
-        if 'children' in node: # Recursively creates all of the Graphviz children nodes
-
-            for child in node['children']:
-
-                if 'ref' in child:
-                    with open(child['ref']) as f:
-                        child = json.load(f)
-
-                child_label, blackboard = self.link_nodes(child, parent_label=node_label, blackboard=blackboard)
-
-                self.dot.edge(node_label, child_label)
-
-        
-
-        return node_label, blackboard
 
 
 

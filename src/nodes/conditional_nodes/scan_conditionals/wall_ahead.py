@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from typing import Union
 import rospy 
 import numpy as np 
 
@@ -12,14 +13,16 @@ otherwise returns "failure".
 '''
 class WallAhead(Conditional):
 
-    def __init__(self, dist, fov):
+    def __init__(self, dist:float, fov:Union[float, int]):
+
+        super(WallAhead, self).__init__()
 
         self.dist = dist
 
         self.view_frac = fov/720
 
 
-    def condition(self, blackboard):
+    def condition(self, blackboard:dict) -> bool:
 
         ranges = np.array(blackboard['/scan'].ranges)
         ranges[ranges == 0] = 999
@@ -31,12 +34,12 @@ class WallAhead(Conditional):
 
         wall_ahead = wall_to_left or wall_to_right
 
-        if wall_ahead:
-            if wall_to_left:
-                print("Wall to the left!")
-            else:
-                print("Wall to the right!")
-        else:
-            print('No wall ahead')
+        # if wall_ahead:
+        #     if wall_to_left:
+        #         print("Wall to the left!")
+        #     else:
+        #         print("Wall to the right!")
+        # else:
+        #     print('No wall ahead')
 
         return wall_ahead

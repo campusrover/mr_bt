@@ -20,6 +20,8 @@ class Stop(Action):
 
     def __init__(self):
 
+        super(Stop, self).__init__()
+
         self.twist = Twist()
 
         self.twist.linear.x = 0
@@ -28,7 +30,7 @@ class Stop(Action):
         self.pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
     
-    def tick(self, blackboard):
+    def execute(self, blackboard:dict) -> str:
 
         self.pub.publish(self.twist)
 
