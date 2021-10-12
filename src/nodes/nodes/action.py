@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 
 from .child_node import ChildNode
 from .node import Node
 
 
-class Action(ChildNode):
+class Action(ChildNode, ABC):
     '''
     The Action class is a leaf node in the behavior tree which completes an action
     specified in the __init__ method. The user is required to customize their action 
