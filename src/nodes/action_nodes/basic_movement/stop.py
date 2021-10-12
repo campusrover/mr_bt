@@ -1,15 +1,8 @@
 #!/usr/bin/env python3
 
-
 import rospy
-
 from geometry_msgs.msg import Twist
-
 from ...nodes.action import Action
-
-
-
-
 
 
 '''
@@ -29,8 +22,7 @@ class Stop(Action):
 
         self.pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
-    
-    def execute(self, blackboard:dict) -> str:
+    def execute(self, blackboard: dict) -> str:
 
         self.pub.publish(self.twist)
 
