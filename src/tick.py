@@ -5,6 +5,9 @@ import rospy
 from std_msgs.msg import Byte
 
 
+
+
+
 if __name__ == "__main__":
 
     rospy.init_node("ticker")
@@ -20,3 +23,9 @@ if __name__ == "__main__":
         pub.publish(True)
 
         r.sleep()
+        
+
+
+
+
+

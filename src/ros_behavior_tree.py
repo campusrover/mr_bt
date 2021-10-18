@@ -2,9 +2,12 @@
 
 import rospy
 import time
-from grapher import Grapher
+from graph_utils import build_dot, color_graph, same_tree_state
 
-from std_msgs.msg import Byte
+from std_msgs.msg import Byte, String
+from sensor_msgs.msg import Image
+
+import threading 
 
 
 
@@ -38,10 +41,11 @@ class ROSBehaviorTree:
 
         self.print_vars = print_vars
 
-        self.graph = Grapher(root)
+        self.graph = build_dot(root)
+        self.dot_pub = rospy.Publisher("graph_dot", String, queue_size=10)
+        self.prev_status_dict = {}
 
         self.root = root
-
         self.blackboard = blackboard
 
         subscribers = []
@@ -64,13 +68,7 @@ class ROSBehaviorTree:
 
         status_dict = {status: self.root.id, **status_dict}
 
-        # start = rospy.Time.now().to_sec()
-        self.graph.show(status_dict)
-        # print(rospy.Time.now().to_sec() - start)
-
-
-        for var in self.print_vars:
-            print(var + ": " + str(self.blackboard[var]))
+        self.publish_dot_msg(status_dict)
 
         self.curr_tick += 1
 
@@ -81,5 +79,14 @@ class ROSBehaviorTree:
 
 
 
-        
+    def publish_dot_msg(self, status_dict: dict):
+
+        if not same_tree_state(status_dict, self.prev_status_dict):
+            self.graph = color_graph(self.graph, status_dict)
+            self.graph.to_string()
+            dot_msg = String(self.graph.to_string())
+            self.dot_pub.publish(dot_msg)
+            self.prev_status_dict = status_dict
+            
+            
     

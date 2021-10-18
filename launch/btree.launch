@@ -8,4 +8,6 @@
 
     <node name="tick" pkg="mr_bt" type="tick.py" output="screen" />
     <node name="behavior_tree" pkg="mr_bt" type="main.py" output="screen" cwd="node" />
+    <node name="graph" pkg="mr_bt" type="grapher.py" output="screen" cwd="node" />
+    
 </launch>

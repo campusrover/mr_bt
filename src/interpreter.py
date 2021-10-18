@@ -129,7 +129,7 @@ class TreeBuilder:
                     self.blackboard[var] = node['blackboard'][var]
 
         node_class = import_node(node['type'])(**parameters)
-
+        node_class.name = node['name']
         return node_class
     
     # def link_blackboard(self, root_name, blackboard):
