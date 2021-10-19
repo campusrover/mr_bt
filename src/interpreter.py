@@ -71,8 +71,8 @@ from loader import import_node
 from nodes.nodes.node import Node
 
 from std_msgs.msg import *
-from nav_msgs.msg import *
-from sensor_msgs.msg import *
+from nav_msgs.msg import Odometry
+from sensor_msgs.msg import LaserScan, CompressedImage, Image
 
 
 class TreeBuilder:

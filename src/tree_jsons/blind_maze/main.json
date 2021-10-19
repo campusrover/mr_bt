@@ -1,0 +1,13 @@
+{
+    "name":"navigate out of maze",
+    "type":"Selector",
+    "children":[
+        {
+            "ref":"tree_jsons/blind_maze/blind_nav.json"
+        },
+        {
+            "name":"Out of the maze!",
+            "type":"Stop"
+        }
+    ]
+}
