@@ -66,21 +66,24 @@ RULES FOR THE JSON FORMATTING:
 '''
 
 import json
+import os
 
 from loader import import_node
 from nodes.nodes.node import Node
-
+from geometry_msgs.msg import Twist
 from std_msgs.msg import *
 from nav_msgs.msg import Odometry
-from sensor_msgs.msg import LaserScan, CompressedImage, Image
+from sensor_msgs.msg import LaserScan, CompressedImage, Image, Joy
 
 
 class TreeBuilder:
 
 
-    def __init__(self, path:str):
+    def __init__(self, btree_folder:str):
 
-        with open(path) as f:
+        self.path = os.path.dirname(os.path.abspath(__file__)) + "/tree_jsons/" + btree_folder + "/"
+
+        with open(self.path + "root.json") as f:
             self.tree_dict = json.load(f)
 
         self.blackboard = {}
@@ -111,7 +114,7 @@ class TreeBuilder:
 
                 for child in node['children']:
                     if 'ref' in child: # Handles the case where the child is a reference to another json file
-                        with open(child['ref']) as f:
+                        with open(self.path + child['ref']) as f:
                             child = json.load(f)
                     parameters["children"].append(self.attach_node(child))
 
@@ -129,7 +132,7 @@ class TreeBuilder:
                     self.blackboard[var] = node['blackboard'][var]
 
         node_class = import_node(node['type'])(**parameters)
-        node_class.name = node['name']
+        node_class.name = node_class.name + "\n" + node['name']
         return node_class
     
     # def link_blackboard(self, root_name, blackboard):

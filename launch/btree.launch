@@ -1,7 +1,7 @@
 <launch>
 
-    <arg name="treefile" default="__NONE__" /> 
-    <param name="treefile" value="$(arg treefile)"/>
+    <arg name="tree" default="__NONE__" /> 
+    <param name="tree" value="$(arg tree)"/>
 
     <arg name="rate" default="15" />
     <param name="rate" value = "$(arg rate)"/>
@@ -9,5 +9,5 @@
     <node name="tick" pkg="mr_bt" type="tick.py" output="screen" />
     <node name="behavior_tree" pkg="mr_bt" type="main.py" output="screen" cwd="node" />
     <node name="graph" pkg="mr_bt" type="grapher.py" output="screen" cwd="node" />
-    
+
 </launch>

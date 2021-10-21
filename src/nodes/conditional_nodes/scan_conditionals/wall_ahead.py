@@ -18,7 +18,7 @@ class WallAhead(Conditional):
         super().__init__()
 
         self.dist = dist
-        self.view_frac = fov/720
+        self.view_frac = fov/360
 
     def condition(self, blackboard: dict) -> bool:
         ranges = np.array(blackboard['/scan'].ranges)

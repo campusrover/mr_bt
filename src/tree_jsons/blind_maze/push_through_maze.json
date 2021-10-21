@@ -3,7 +3,7 @@
     "type":"Selector",
     "children":[
         {
-            "ref":"tree_jsons/blind_maze/avoid_wall.json"
+            "ref":"avoid_wall.json"
         },
         {
             "name":"move forward",

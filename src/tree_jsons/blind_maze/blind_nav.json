@@ -6,14 +6,14 @@
             "name":"Check to see if we are still in the maze",
             "type":"ReachedPosition",
             "goal_pos_var_name":"goal_pos",
-            "error":2.0,
+            "error":2.3,
             "blackboard":{
                 "goal_pos":[0,0],
                 "/odom":"Odometry"
             } 
         },
         {
-            "ref":"tree_jsons/blind_maze/push_through_maze.json"
+            "ref":"push_through_maze.json"
         }
     ]
 }

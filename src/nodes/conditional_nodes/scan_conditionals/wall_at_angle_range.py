@@ -21,17 +21,12 @@ class WallAtAngleRange(Conditional):
         ranges = np.array(blackboard['/scan'].ranges)
         ranges[ranges == 0] = 999
         ranges[ranges < 0.1] = 0
-        # print(ranges)
 
         n = ranges.size
-        print(n)
         if n == 0:
             return False
 
         scaled_start = int(self.start_angle)
         scaled_end = int(self.end_angle)
-        print(scaled_start)
-        print(scaled_end)
-        print('\n\n')
         return np.min(ranges[scaled_start:scaled_end]) <= self.dist
 

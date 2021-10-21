@@ -3,7 +3,10 @@
     "type":"Selector",
     "children":[
         {
-            "ref":"tree_jsons/blind_maze/blind_nav.json"
+            "ref":"gamepad_override.json"
+        },
+        {
+            "ref":"blind_nav.json"
         },
         {
             "name":"Out of the maze!",
