@@ -21,7 +21,7 @@ class GamepadTeleop(Action):
     def execute(self, blackboard):
         try:
             joy = blackboard['/joy']
-            self.twist.angular.z = joy.axes[0]*self.ang_scale
+            self.twist.angular.z = joy.axes[3]*self.ang_scale
             self.twist.linear.x = joy.axes[1]*self.lin_scale
 
             self.pub.publish(self.twist)

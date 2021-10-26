@@ -1,16 +1,17 @@
 {
-    "name":"Override movements with gamepad controller",
+    "name":"Toggle gamepad teleop override with X button",
     "type":"Sequencer",
     "children":[
         {
             "name":"Is the button toggled?",
-            "type":"ButtonToggled"
+            "type":"ButtonToggled",
+            "button":7
         },
-        {
-            "name":"Use the controller to control the robot",
-            "type":"GamepadTeleop"
+        {   
+            "ref":"autopilot.json"
         }
     ],
+    "blackbox": false,
     "blackboard":{
         "/joy":"Joy"
     }

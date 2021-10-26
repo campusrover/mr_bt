@@ -12,13 +12,15 @@ class ParentNode(Node, ABC):
     The child nodes can either be action/conditional nodes, sequencers, or other selectors.
     '''
 
-    def __init__(self, children:list):
+    def __init__(self, children:list, blackbox: bool = False):
 
-        super(ParentNode, self).__init__()
+        super().__init__()
 
         self.num_children = len(children)
         
         self.children = children
+
+        self.blackbox = blackbox
 
 
     "Implements the main control flow for each of the children and returns the status"

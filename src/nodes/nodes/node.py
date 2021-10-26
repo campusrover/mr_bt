@@ -12,9 +12,11 @@ class Node(ABC):
     of nodes.
     '''
 
-    def __init__(self):
+    def __init__(self, blackbox: bool = False):
         self.id = str(id(self))
         self.name = self.__class__.__name__
+        self.label = None
+
 
 
 

@@ -10,8 +10,8 @@ class Sequencer(ParentNode):
     "success" back up the tree.
     '''
 
-    def __init__(self, children:list):
-        super(Sequencer, self).__init__(children)
+    def __init__(self, children:list, blackbox: bool = False):
+        super().__init__(children, blackbox)
 
 
     def control_flow(self, blackboard:dict) -> tuple([str, dict]):

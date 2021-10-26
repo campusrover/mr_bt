@@ -26,12 +26,13 @@ class Conditional(ChildNode, ABC):
 
     def tick(self, blackboard:dict) -> dict:
 
-        condition_met = self.condition(blackboard)
-
         status = 'failure'
 
-        if condition_met:
-            
-            status = 'success'
+        try:
+            condition_met = self.condition(blackboard)
+            if condition_met:  
+                status = 'success'
+        except AttributeError:
+            status = "running"
 
         return status, {self.id : status}   

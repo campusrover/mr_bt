@@ -31,6 +31,11 @@ class Action(ChildNode, ABC):
 
     def tick(self, blackboard:dict) -> tuple([str, dict]):
 
-        status = self.execute(blackboard)
+        try:
+
+            status = self.execute(blackboard)
+        except:
+            
+            status = "failure"
 
         return status, {self.id : status}

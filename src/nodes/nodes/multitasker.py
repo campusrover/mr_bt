@@ -14,8 +14,8 @@ class Multitasker(ParentNode):
     return "running". If all of the children nodes return "success", then the Multitasker will also return "success".
     '''
 
-    def __init__(self, children:list):
-        super(Multitasker, self).__init__(children)
+    def __init__(self, children:list, blackbox: bool = False):
+        super().__init__(children, blackbox)
 
     
 

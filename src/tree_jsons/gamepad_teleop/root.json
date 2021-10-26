@@ -4,7 +4,7 @@
     "children":[
         {
             "name":"Is the button pressed?",
-            "type":"ButtonPressed",
+            "type":"ButtonToggled",
             "button":0
         },
         {

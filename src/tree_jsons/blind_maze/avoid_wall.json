@@ -9,6 +9,7 @@
             "ref":"wall_to_left.json"
         }
     ],
+    "blackbox": true,
     "blackboard":{
         "/scan":"LaserScan"
     }

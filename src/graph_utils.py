@@ -24,15 +24,20 @@ def build_dot(root: Node) -> pydot.Dot:
 
 def recursive_init(graph: pydot.Dot, node: Node) -> None:
 
-    dot_node = pydot.Node(node.id, label=node.name, color="gray")
+    label = f"{node.name}\n{node.label}"
+    dot_node = pydot.Node(node.id, label=label, color="gray")
 
     graph.add_node(dot_node)
 
     if issubclass(type(node), ParentNode):
-        for child in node.children:
-            recursive_init(graph, child)
-            edge = pydot.Edge(node.id, child.id, color="black")
-            graph.add_edge(edge)
+        if not node.blackbox:
+            for child in node.children:
+                recursive_init(graph, child)
+                edge = pydot.Edge(node.id, child.id, color="black")
+                graph.add_edge(edge)
+        else:
+            dot_node.set_label(f"{label}\n...")
+            
 
 
 def color_graph(graph: pydot.Dot, status_dict: dict) -> pydot.Dot:

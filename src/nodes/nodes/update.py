@@ -24,5 +24,9 @@ class Update(ChildNode, ABC):
 
     
     def tick(self, blackboard:dict) -> tuple([str, dict]):
-        status = self.update_blackboard(blackboard)
+        try:
+
+            status = self.update_blackboard(blackboard)
+        except:
+            status = "failure"
         return status, {self.id : status}
