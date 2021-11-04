@@ -1,0 +1,4 @@
+<launch>
+
+<node name="test" pkg="mr_bt" type="test.py" output="screen" cwd="node"/>
+</launch>

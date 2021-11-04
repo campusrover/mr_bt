@@ -31,7 +31,6 @@ def import_node(node_class_name):
 
     node_Path = list(Path("nodes").rglob(node_name + ".py"))
 
-    # stdout.write(node_class_name + ": " + str(node_Path) + "\n")
 
     node_filepath = str(node_Path[0])
 
