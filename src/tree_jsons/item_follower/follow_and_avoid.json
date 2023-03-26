@@ -16,7 +16,7 @@
       "detection_var_name":"detection"
     },
     {
-      "ref":"tree_jsons/item_follower/follow_item_stop_stopper.json"
+      "ref":"item_follower/follow_item_stop_stopper.json"
     }
   ],
   "blackboard":{

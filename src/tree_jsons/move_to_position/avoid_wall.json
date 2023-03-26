@@ -9,7 +9,7 @@
             "fov":30
         },
         {
-            "ref":"tree_jsons/item_follower/follow_wall.json"
+            "ref":"item_follower/follow_wall.json"
         }
     ]
 }

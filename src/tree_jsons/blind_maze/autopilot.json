@@ -3,7 +3,7 @@
     "type":"Selector",
     "children":[
         {
-            "ref":"avoid_wall.json"
+            "ref":"blind_maze/avoid_wall.json"
         },
         {
             "name":"Use the controller to control the robot",

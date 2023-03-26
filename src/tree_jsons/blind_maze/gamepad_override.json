@@ -8,7 +8,7 @@
             "button":7
         },
         {   
-            "ref":"autopilot.json"
+            "ref":"blind_maze/autopilot.json"
         }
     ],
     "blackbox": false,

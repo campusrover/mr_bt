@@ -3,10 +3,10 @@
     "type":"Selector",
     "children":[
       {
-        "ref":"tree_jsons/item_follower/stop_item.json"
+        "ref":"item_follower/stop_item.json"
       },
       {
-        "ref":"tree_jsons/item_follower/follow_item.json"
+        "ref":"item_follower/follow_item.json"
       }
     ]
   }

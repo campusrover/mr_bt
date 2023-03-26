@@ -13,7 +13,7 @@
             } 
         },
         {
-            "ref":"push_through_maze.json"
+            "ref":"blind_maze/push_through_maze.json"
         }
     ]
 }

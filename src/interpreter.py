@@ -72,8 +72,8 @@ from loader import import_node
 from nodes.nodes.node import Node
 from geometry_msgs.msg import Twist
 from std_msgs.msg import *
-from nav_msgs.msg import Odometry
-from sensor_msgs.msg import LaserScan, CompressedImage, Image, Joy
+from nav_msgs.msg import *
+from sensor_msgs.msg import *
 
 
 class TreeBuilder:
@@ -81,9 +81,9 @@ class TreeBuilder:
 
     def __init__(self, btree_folder:str):
 
-        self.path = os.path.dirname(os.path.abspath(__file__)) + "/tree_jsons/" + btree_folder + "/"
-
-        with open(self.path + "root.json") as f:
+        self.path = os.path.dirname(os.path.abspath(__file__)) + "/tree_jsons/"
+        self.btree_folder = btree_folder
+        with open(self.path + btree_folder +  "/root.json") as f:
             self.tree_dict = json.load(f)
 
         self.blackboard = {}
@@ -111,11 +111,13 @@ class TreeBuilder:
             if parameter == 'children': # Initializes all children recursively and appends them to a list which is then
                                         # passed as another parameter in the node
                 parameters["children"] = []
-
+                
                 for child in node['children']:
                     if 'ref' in child: # Handles the case where the child is a reference to another json file
-                        with open(self.path + child['ref']) as f:
-                            child = json.load(f)
+                        f = open(self.path + child['ref'])
+                        child = json.load(f)
+                        f.close()
+                        parameters["children"].append(self.attach_node(child))
                     parameters["children"].append(self.attach_node(child))
 
             elif parameter not in specials:

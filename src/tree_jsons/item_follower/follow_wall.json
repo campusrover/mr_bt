@@ -3,10 +3,10 @@
     "type":"Sequencer",
     "children":[
       {
-        "ref":"tree_jsons/item_follower/scan_preprocessing.json"
+        "ref":"item_follower/scan_preprocessing.json"
       },
       {
-        "ref":"tree_jsons/item_follower/pid.json"
+        "ref":"item_follower/pid.json"
       },
       {
         "name":"Move according to PID calculations",

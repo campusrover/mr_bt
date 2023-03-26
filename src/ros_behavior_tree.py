@@ -81,12 +81,12 @@ class ROSBehaviorTree:
 
     def publish_dot_msg(self, status_dict: dict):
 
-        if not same_tree_state(status_dict, self.prev_status_dict):
-            self.graph = color_graph(self.graph, status_dict)
-            self.graph.to_string()
-            dot_msg = String(self.graph.to_string())
-            self.dot_pub.publish(dot_msg)
-            self.prev_status_dict = status_dict
+        # if not same_tree_state(status_dict, self.prev_status_dict):
+        self.graph = color_graph(self.graph, status_dict)
+        self.graph.to_string()
+        dot_msg = String(self.graph.to_string())
+        self.dot_pub.publish(dot_msg)
+        self.prev_status_dict = status_dict
             
             
     

@@ -75,7 +75,7 @@ def graph_imgmsg_from_str(graph_str: str) -> Image:
 
         np_img = np.frombuffer(byte_img, dtype=np.int8)
 
-        cv_img = cv2.imdecode(np_img, cv2.IMREAD_UNCHANGED)
+        cv_img = cv2.imdecode(np_img, cv2.IMREAD_COLOR)
 
         return CvBridge().cv2_to_imgmsg(cv_img)
 

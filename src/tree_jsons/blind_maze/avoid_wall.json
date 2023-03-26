@@ -3,10 +3,10 @@
     "type":"Selector",
     "children":[
         {
-            "ref":"wall_to_right.json"
+            "ref":"blind_maze/wall_to_right.json"
         },
         {
-            "ref":"wall_to_left.json"
+            "ref":"blind_maze/wall_to_left.json"
         }
     ],
     "blackbox": true,
