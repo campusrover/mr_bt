@@ -31,17 +31,12 @@ class AngleToPosition(Update):
 
         goal_angle = np.arctan(goal_vect[1]/goal_vect[0])
 
-        goal_rotation = (goal_angle-rot)*(180/3.1415) 
+        if goal_vect[1] < 0:
+            goal_angle = np.pi + goal_angle
 
-        if goal_rotation < -180:
+        
 
-            goal_rotation += 360
-
-        elif goal_rotation > 180:
-
-            goal_rotation -= 360
-
-        blackboard[self.goal_rotation_var_name] = goal_rotation * (3.1415/180)
+        blackboard[self.goal_rotation_var_name] = goal_angle
 
         return 'success'
 

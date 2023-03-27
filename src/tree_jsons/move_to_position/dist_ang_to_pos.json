@@ -23,5 +23,6 @@
     "blackboard":{
         "goal_rotation":null,
         "dist":null
-    }
+    },
+    "blackbox":true
 }

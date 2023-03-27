@@ -2,25 +2,23 @@
     "name":"pid",
     "type":"Multitasker",
     "children":[
-        {
-            "name":"Calculate angular velocity necessary to be parallel to the wall",
-            "type":"AngularPid",
-            "pid_err_var_name":"angular_pid",
-            "nearest_dist_var_name":"nearest_dist",
-            "nearest_angle_var_name":"nearest_wall_angle",
-            "kp":0.7,
-            "kd":0.7,
-            "kp2":0.8,
-            "dwall":0.09,
-            "offset":1.57079
-          },
-          {
-            "name":"Calculate linear velocity necessary to avoid collision",
-            "type":"LinearPid",
-            "linear_pid_var_name":"linear_pid",
-            "diff_var_name":"avg_front_dist",
-            "max_vel":0.1,
-            "offset":0.05
-          }
+      {
+        "name":"Calculate angular velocity necessary to face towards the position",
+        "type":"PathCorrection",
+        "correction_var_name":"angular_pid",
+        "goal_value_var_name":"nearest_wall_angle",
+        "current_value_var_name":"rotation",
+        "max_vel":1.5,
+        "offset":1.554
+      },
+      {
+        "name":"Calculate linear velocity to get to position",
+        "type":"PathCorrection",
+        "correction_var_name":"linear_pid",
+        "goal_value_var_name":"nearest_dist",
+        "current_value_var_name":"dummy_current_value",
+        "max_vel":0.1,
+        "offset":0.3
+      }
     ]
 }

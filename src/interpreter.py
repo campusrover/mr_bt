@@ -117,7 +117,6 @@ class TreeBuilder:
                         f = open(self.path + child['ref'])
                         child = json.load(f)
                         f.close()
-                        parameters["children"].append(self.attach_node(child))
                     parameters["children"].append(self.attach_node(child))
 
             elif parameter not in specials:

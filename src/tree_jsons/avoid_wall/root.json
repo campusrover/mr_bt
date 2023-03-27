@@ -1,9 +1,9 @@
 {
     "name":"Avoid wall",
-    "type":"Selector",
+    "type":"Sequencer",
     "children":[
         {
-            "ref":"tree_jsons/avoid_wall/turn_away_from_wall.json"
+            "ref":"avoid_wall/turn_away_from_wall.json"
         },
         {
             "name":"move_forward",

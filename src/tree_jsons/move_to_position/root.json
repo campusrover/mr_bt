@@ -3,9 +3,6 @@
     "type":"Selector",
     "children":[
         {
-            "ref":"move_to_position/avoid_wall.json"
-        },
-        {
             "ref":"move_to_position/reached_goal.json"
         },
         {
@@ -13,7 +10,7 @@
         }
     ],
     "blackboard":{
-        "goal_pos":[2,2],
+        "goal_pos":[1,1],
         "/odom":"Odometry"
     }
 }

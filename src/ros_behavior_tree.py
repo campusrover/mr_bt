@@ -3,7 +3,7 @@
 import rospy
 import time
 from graph_utils import build_dot, color_graph, same_tree_state
-
+import numpy as np
 from std_msgs.msg import Byte, String
 from sensor_msgs.msg import Image
 
@@ -35,11 +35,11 @@ class ROSBehaviorTree:
             ]
 
     '''
-    def __init__(self, root, blackboard, print_vars=[]):
+    def __init__(self, root: str, blackboard: dict, log: bool = False):
 
         self.curr_tick = 1
 
-        self.print_vars = print_vars
+        self.log = log
 
         self.graph = build_dot(root)
         self.dot_pub = rospy.Publisher("graph_dot", String, queue_size=10)
@@ -47,6 +47,7 @@ class ROSBehaviorTree:
 
         self.root = root
         self.blackboard = blackboard
+        self.log_started = False
 
         subscribers = []
 
@@ -70,6 +71,10 @@ class ROSBehaviorTree:
 
         self.publish_dot_msg(status_dict)
 
+        if self.log:
+            self.log_started = True
+            self.log_blackboard()
+
         self.curr_tick += 1
 
 
@@ -81,12 +86,26 @@ class ROSBehaviorTree:
 
     def publish_dot_msg(self, status_dict: dict):
 
-        # if not same_tree_state(status_dict, self.prev_status_dict):
-        self.graph = color_graph(self.graph, status_dict)
-        self.graph.to_string()
-        dot_msg = String(self.graph.to_string())
-        self.dot_pub.publish(dot_msg)
-        self.prev_status_dict = status_dict
+        if not same_tree_state(status_dict, self.prev_status_dict):
+            self.graph = color_graph(self.graph, status_dict)
+            self.graph.to_string()
+            dot_msg = String(self.graph.to_string())
+            self.dot_pub.publish(dot_msg)
+            self.prev_status_dict = status_dict
             
             
-    
+    def log_blackboard(self):
+        # if self.log_started:
+        #     rospy.loginfo("\033[F\033[K"*(len(self.blackboard.keys())+3))
+        bb_str = "BLACKBOARD:\n"
+        for var in self.blackboard:
+            if isinstance(self.blackboard[var], (str, bool, float, int)):
+                bb_str += f"    {var}: {self.blackboard[var]}\n"
+            elif isinstance(self.blackboard[var], (list, np.ndarray)):
+                if len(self.blackboard[var]) <= 5:
+                    bb_str += f"    {var}: {self.blackboard[var]}\n"
+                else:
+                    bb_str += f"    {var}: {self.blackboard[var][0:5]}\n"
+            else:
+                bb_str += f"    {var}: {type(self.blackboard[var])}\n"
+        rospy.loginfo_throttle_identical(10, bb_str)
