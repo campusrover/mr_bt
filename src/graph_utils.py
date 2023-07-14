@@ -8,8 +8,8 @@ from sensor_msgs.msg import Image
 import numpy as np
 import pydot
 
-from nodes.nodes.node import Node
-from nodes.nodes.parent_node import ParentNode
+from .nodes.nodes.node import Node
+from .nodes.nodes.parent_node import ParentNode
 
 
 color_map = {"success":"green", "failure":"red", "running":"yellow"}
@@ -43,7 +43,7 @@ def recursive_init(graph: pydot.Dot, node: Node) -> None:
 def color_graph(graph: pydot.Dot, status_dict: dict) -> pydot.Dot:
 
     executed = [*status_dict] # Returns list of node ids which have been executed
-    
+
     for dot_node in graph.get_node_list():
 
         node_color = "black"
@@ -68,16 +68,11 @@ def color_graph(graph: pydot.Dot, status_dict: dict) -> pydot.Dot:
 
 
 def graph_imgmsg_from_str(graph_str: str) -> Image:
-
-        graph = pydot.graph_from_dot_data(graph_str)[0]
-
-        byte_img = graph.create_jpg()
-
-        np_img = np.frombuffer(byte_img, dtype=np.int8)
-
-        cv_img = cv2.imdecode(np_img, cv2.IMREAD_COLOR)
-
-        return CvBridge().cv2_to_imgmsg(cv_img)
+    graph = pydot.graph_from_dot_data(graph_str)[0]
+    byte_img = graph.create_jpg()
+    np_img = np.frombuffer(byte_img, dtype=np.int8)
+    cv_img = cv2.imdecode(np_img, cv2.IMREAD_COLOR)
+    return CvBridge().cv2_to_imgmsg(cv_img)
 
 
 def same_tree_state(status_dict: dict, prev_status_dict: dict) -> bool:

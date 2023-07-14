@@ -1,16 +1,9 @@
 #!/usr/bin/env python3
 
 import rospy
-import time
-from graph_utils import build_dot, color_graph, same_tree_state
 import numpy as np
 from std_msgs.msg import Byte, String
-from sensor_msgs.msg import Image
-
-import threading 
-
-
-
+from .graph_utils import build_dot, color_graph, same_tree_state
 
 class ROSBehaviorTree:
 
@@ -19,8 +12,8 @@ class ROSBehaviorTree:
     behavior tree. The "blackboard_vars" parameter should be a python list containing other lists
     of size 2. The structure of the inner lists should be ["variable_name", message_type].
     
-    If a blackboard variable is expected to be a ROS topic, then its variable_name should be the name of the topic starting
-    with a "/". Ex: "/scan"
+    If a blackboard variable is expected to be a ROS topic, then its variable_name should be the name of the topic
+    starting with a "/". Ex: "/scan"
 
     If a blackboard variable is expected to be a ROS topic, then its message_type in "blackboard_vars" should 
     be the ROS message that is expected to be. Otherwise, you may leave the message type as either None or the 
@@ -55,15 +48,13 @@ class ROSBehaviorTree:
 
             # Creates a new subscriber for each topic specified in the blackboard
             if var[0] == "/":
-                
                 subscribers.append(rospy.Subscriber(var, blackboard[var], self.cb, var))
-
                 self.blackboard[var] = None
-
         self.tick_sub = rospy.Subscriber('/tick', Byte, self.tick_root)
 
 
     def tick_root(self, msg):
+        """Call Tick at the Root (I know this doesn't say anything. I am just testing pylint)"""
 
         status, status_dict = self.root.tick(self.blackboard)
 

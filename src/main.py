@@ -4,10 +4,6 @@ import rospy
 from interpreter import TreeBuilder
 from ros_behavior_tree import ROSBehaviorTree
 
-
-
-import os
-
 if __name__ == '__main__':
 
     tree = rospy.get_param("tree")
