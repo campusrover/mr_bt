@@ -8,8 +8,8 @@ from sensor_msgs.msg import Image
 import numpy as np
 import pydot
 
-from .nodes.nodes.node import Node
-from .nodes.nodes.parent_node import ParentNode
+from nodes.nodes.node import Node
+from nodes.nodes.parent_node import ParentNode
 
 
 color_map = {"success":"green", "failure":"red", "running":"yellow"}

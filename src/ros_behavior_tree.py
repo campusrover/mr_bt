@@ -3,7 +3,7 @@
 import rospy
 import numpy as np
 from std_msgs.msg import Byte, String
-from .graph_utils import build_dot, color_graph, same_tree_state
+from graph_utils import build_dot, color_graph, same_tree_state
 
 class ROSBehaviorTree:
 

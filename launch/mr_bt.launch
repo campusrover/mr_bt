@@ -10,8 +10,8 @@
     <param name="log" value = "$(arg log)"/>
 
 
-    <node name="tick" pkg="mr_bt" type="tick.py" output="screen" />
-    <node name="behavior_tree" pkg="mr_bt" type="main.py" output="screen" cwd="node" />
-    <node name="graph" pkg="mr_bt" type="grapher.py" output="screen" cwd="node" />
+    <node name="tick" pkg="cr2023" type="tick.py" output="screen" />
+    <node name="behavior_tree" pkg="cr2023" type="main.py" output="screen" cwd="node" />
+    <node name="graph" pkg="cr2023" type="grapher.py" output="screen" cwd="node" />
 
 </launch>

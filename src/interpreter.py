@@ -63,13 +63,13 @@ RULES FOR THE JSON FORMATTING:
 import json
 import os
 
-from .loader import import_node
-from .nodes.nodes.node import Node
+from loader import import_node
+from nodes.nodes.node import Node
 
-# from geometry_msgs.msg import Twist
-# from std_msgs.msg import *
-# from nav_msgs.msg import *
-# from sensor_msgs.msg import *
+from geometry_msgs.msg import Twist
+from std_msgs.msg import *
+from nav_msgs.msg import *
+from sensor_msgs.msg import *
 
 
 class TreeBuilder:
