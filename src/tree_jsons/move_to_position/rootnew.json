@@ -1,0 +1,28 @@
+{
+    "name": "move_to_position",
+    "type": "Sequencer",
+    "children": [
+        {
+            "name": "get_rot",
+            "type": "GetRotation",
+            "odom_var_name": "/odom",
+            "rotation_var_name": "rotation",
+            "degrees": false
+        },
+        {
+            "name": "get_pos",
+            "type": "GetPosition",
+            "position_var_name": "position"
+        },
+        {
+            "ref": "move_to_position/dist_ang_to_pos.json"
+        }
+    ],
+    "blackboard": {
+        "goal_pos": [
+            0.0,
+            0.0
+        ],
+        "/odom": "Odometry"
+    }
+}

@@ -1,0 +1,17 @@
+<launch>
+
+    <arg name="tree" default="__NONE__" /> 
+    <param name="tree" value="$(arg tree)"/>
+
+    <arg name="rate" default="15" />
+    <param name="rate" value = "$(arg rate)"/>
+
+    <arg name="log" default="true"/>
+    <param name="log" value = "$(arg log)"/>
+
+
+    <node name="tick" pkg="cr2023" type="tick.py" output="screen" />
+    <node name="behavior_tree" pkg="cr2023" type="main.py" output="screen" cwd="node" />
+    <node name="graph" pkg="cr2023" type="grapher.py" output="screen" cwd="node" />
+
+</launch>

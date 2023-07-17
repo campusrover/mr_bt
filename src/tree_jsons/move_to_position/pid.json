@@ -9,7 +9,8 @@
             "correction_var_name":"angular_goal_pid",
             "goal_value_var_name":"goal_rotation",
             "current_value_var_name":"rotation",
-            "max_vel":1.5
+            "max_vel":0.5,
+            "steepness": 4
           },
           {
             "name":"Calculate linear velocity to get to position",
@@ -17,8 +18,9 @@
             "correction_var_name":"linear_goal_pid",
             "goal_value_var_name":"dist",
             "current_value_var_name":"dummy_current_value",
-            "max_vel":0.1,
-            "offset":0
+            "max_vel":0.6,
+            "offset":0,
+            "steepness": 3
           }
     ],
     "blackboard":{

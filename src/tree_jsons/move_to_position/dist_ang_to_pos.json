@@ -10,7 +10,6 @@
             "curr_position_var_name":"position",
             "goal_rotation_var_name":"goal_rotation",
             "rotation_var_name":"rotation"
-            
         },
         {
             "name":"dist_to_position",

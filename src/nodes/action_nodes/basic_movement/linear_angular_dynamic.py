@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import traceback
 import rospy
 from geometry_msgs.msg import Twist
 from ...nodes.action import Action

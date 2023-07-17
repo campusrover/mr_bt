@@ -11,10 +11,10 @@ class Grapher:
     def __init__(self):
 
         self.pub = rospy.Publisher("btree", Image, queue_size=10)
-        self.sub = rospy.Subscriber("graph_dot", String, callback=self.cb)
+        self.sub = rospy.Subscriber("graph_dot", String, callback=self.graph_cb)
 
 
-    def cb(self, msg):
+    def graph_cb(self, msg):
 
         graph_str = msg.data
         graph_imgmsg = graph_imgmsg_from_str(graph_str)

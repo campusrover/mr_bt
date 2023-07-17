@@ -18,7 +18,7 @@ class LinearAngularStatic(Action):
         self.pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
     def execute(self, blackboard: dict) -> str:
-
+        print("LinearAngularDynamic")
         self.pub.publish(self.twist)
 
         return "success"

@@ -7,10 +7,6 @@ from nav_msgs.msg import Odometry
 
 from ...nodes.update import Update
 
-
-
-
-
 class GetRotation(Update):
 
 

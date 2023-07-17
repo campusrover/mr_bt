@@ -70,14 +70,11 @@ class ROSBehaviorTree:
 
 
     def cb(self, msg, var):
-
         self.blackboard[var] = msg
 
-
-
     def publish_dot_msg(self, status_dict: dict):
-
         if not same_tree_state(status_dict, self.prev_status_dict):
+            print("-------dot update")
             self.graph = color_graph(self.graph, status_dict)
             self.graph.to_string()
             dot_msg = String(self.graph.to_string())
@@ -90,8 +87,10 @@ class ROSBehaviorTree:
         #     rospy.loginfo("\033[F\033[K"*(len(self.blackboard.keys())+3))
         bb_str = "BLACKBOARD:\n"
         for var in self.blackboard:
-            if isinstance(self.blackboard[var], (str, bool, float, int)):
+            if isinstance(self.blackboard[var], (str, bool, int)):
                 bb_str += f"    {var}: {self.blackboard[var]}\n"
+            elif isinstance(self.blackboard[var], float):
+                bb_str += f"    {var}: {self.blackboard[var]:1.2f}\n"
             elif isinstance(self.blackboard[var], (list, np.ndarray)):
                 if len(self.blackboard[var]) <= 5:
                     bb_str += f"    {var}: {self.blackboard[var]}\n"
